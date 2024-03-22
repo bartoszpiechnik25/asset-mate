@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+message EtfHoldings {
+    string symbol = 1;
+    string holding_name = 2;
+    float holding_percent = 3;
+}
+
+message SectorWeights {
+    string sector_name = 1;
+    float sector_weight = 2;
+}
+
+message Etf {
+    string ticker = 1;
+    string yahoo_symbol = 2;
+    string name = 3;
+    string currency = 4;
+    repeated EtfHoldings  holdings = 5;
+    repeated SectorWeights weights = 6;
+}
+
+message GetEtfByName {
+    string name = 1;
+}
+
+message GetEtfByTicker {
+    string yahoo_symbol = 1;
+}
+
+service EtfService {
+    rpc GetEtf (GetEtfByTicker) returns (Etf) {}
+}
