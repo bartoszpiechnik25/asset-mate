@@ -4,9 +4,9 @@ protoc.main(
     (
         "",
         "-I../protos",
-        "--python_out=./etf_service_pb3",
-        "--grpc_python_out=./etf_service_pb3",
-        "--pyi_out=./etf_service_pb3",
+        "--python_out=./v1",
+        "--grpc_python_out=./v1",
+        "--pyi_out=./v1",
         "../protos/etf_service.proto",
     )
 )

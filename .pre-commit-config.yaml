@@ -15,11 +15,11 @@ repos:
     hooks:
     - id: flake8
       args: ["--extend-ignore=E203,E402,E501"]
-      exclude: etf_service_pb3/
+      exclude: etf_service_pb2*
 
   - repo: https://github.com/ambv/black
     rev: 23.7.0
     hooks:
     - id: black
       additional_dependencies: ['click==8.0.4']
-      exclude: etf_service_pb3/
+      exclude: etf_service_pb2*

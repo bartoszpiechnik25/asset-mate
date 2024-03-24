@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  mongo-db:
+    container_name: financial-instruments-mongo
+    image: mongo:latest
+    restart: always
+    command:
+      - --auth
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    env_file: .env
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    restart: always
+    environment:
+      - ME_CONFIG_MONGODB_URL=${MONGO_URL}
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo-db

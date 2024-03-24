@@ -12,22 +12,25 @@ message SectorWeights {
 }
 
 message Etf {
-    string ticker = 1;
-    string yahoo_symbol = 2;
-    string name = 3;
-    string currency = 4;
-    repeated EtfHoldings  holdings = 5;
-    repeated SectorWeights weights = 6;
+    string yahoo_symbol = 1;
+    string name = 2;
+    string currency = 3;
+    repeated EtfHoldings  holdings = 4;
+    repeated SectorWeights weights = 5;
+    int64 total_assets = 6;
+    float expense_ratio = 7;
+    float last_close = 8;
 }
 
 message GetEtfByName {
     string name = 1;
 }
 
-message GetEtfByTicker {
+message EtfByTicker {
     string yahoo_symbol = 1;
 }
 
 service EtfService {
-    rpc GetEtf (GetEtfByTicker) returns (Etf) {}
+    rpc GetEtf (EtfByTicker) returns (Etf) {}
+    rpc AddEtf (EtfByTicker) returns (Etf) {}
 }

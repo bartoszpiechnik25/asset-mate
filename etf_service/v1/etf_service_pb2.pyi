@@ -37,27 +37,42 @@ class SectorWeights(_message.Message):
     ) -> None: ...
 
 class Etf(_message.Message):
-    __slots__ = ("ticker", "yahoo_symbol", "name", "currency", "holdings", "weights")
-    TICKER_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = (
+        "yahoo_symbol",
+        "name",
+        "currency",
+        "holdings",
+        "weights",
+        "total_assets",
+        "expense_ratio",
+        "last_close",
+    )
     YAHOO_SYMBOL_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     CURRENCY_FIELD_NUMBER: _ClassVar[int]
     HOLDINGS_FIELD_NUMBER: _ClassVar[int]
     WEIGHTS_FIELD_NUMBER: _ClassVar[int]
-    ticker: str
+    TOTAL_ASSETS_FIELD_NUMBER: _ClassVar[int]
+    EXPENSE_RATIO_FIELD_NUMBER: _ClassVar[int]
+    LAST_CLOSE_FIELD_NUMBER: _ClassVar[int]
     yahoo_symbol: str
     name: str
     currency: str
     holdings: _containers.RepeatedCompositeFieldContainer[EtfHoldings]
     weights: _containers.RepeatedCompositeFieldContainer[SectorWeights]
+    total_assets: int
+    expense_ratio: float
+    last_close: float
     def __init__(
         self,
-        ticker: _Optional[str] = ...,
         yahoo_symbol: _Optional[str] = ...,
         name: _Optional[str] = ...,
         currency: _Optional[str] = ...,
         holdings: _Optional[_Iterable[_Union[EtfHoldings, _Mapping]]] = ...,
         weights: _Optional[_Iterable[_Union[SectorWeights, _Mapping]]] = ...,
+        total_assets: _Optional[int] = ...,
+        expense_ratio: _Optional[float] = ...,
+        last_close: _Optional[float] = ...,
     ) -> None: ...
 
 class GetEtfByName(_message.Message):
@@ -66,7 +81,7 @@ class GetEtfByName(_message.Message):
     name: str
     def __init__(self, name: _Optional[str] = ...) -> None: ...
 
-class GetEtfByTicker(_message.Message):
+class EtfByTicker(_message.Message):
     __slots__ = ("yahoo_symbol",)
     YAHOO_SYMBOL_FIELD_NUMBER: _ClassVar[int]
     yahoo_symbol: str
