@@ -1,6 +1,5 @@
 import grpc
 import asyncio
-import logging
 
 from v1.etf_service_pb2_grpc import add_EtfServiceServicer_to_server
 from v1.service import EtfServiceServicer
@@ -12,7 +11,6 @@ DB = get_db(CONFIG)
 
 async def serve():
     server = grpc.aio.server()
-    print(DB)
     add_EtfServiceServicer_to_server(
         EtfServiceServicer(DB, CONFIG["ETF_COLLECTION"]), server
     )
@@ -22,6 +20,5 @@ async def serve():
 
 
 if __name__ == "__main__":
-    logging.basicConfig()
     print("Listening on localhost:50051")
     asyncio.get_event_loop().run_until_complete(serve())

@@ -5,22 +5,39 @@ import yfinance as yf
 import asyncio
 
 
-async def get_specifics(ticker: str, data: dict):
+async def get_specifics(ticker: str, data: dict, message: dict):
     etf_specifics = yq.Ticker(ticker)
     holding_info = etf_specifics.fund_holding_info[ticker]
-    data["holdings"] = [
-        etf_service_pb3.EtfHoldings(
-            symbol=holding["symbol"],
-            holding_name=holding["holdingName"],
-            holding_percent=holding["holdingPercent"],
+
+    message["holdings"], data["holdings"] = [], []
+    for holding in holding_info["holdings"]:
+        data["holdings"].append(
+            {
+                "symbol": holding["symbol"],
+                "holding_name": holding["holdingName"],
+                "holding_percent": holding["holdingPercent"],
+            }
         )
-        for holding in holding_info["holdings"]
-    ]
-    data["weights"] = [
-        etf_service_pb3.SectorWeights(sector_name=key, sector_weight=value)
-        for weight_obj in holding_info["sectorWeightings"]
-        for key, value in filter(lambda x: x[1] > 0, weight_obj.items())
-    ]
+        message["holdings"].append(
+            etf_service_pb3.EtfHoldings(
+                symbol=holding["symbol"],
+                holding_name=holding["holdingName"],
+                holding_percent=holding["holdingPercent"],
+            )
+        )
+
+    message["weights"], data["weights"] = [], []
+    for weight_obj in holding_info["sectorWeightings"]:
+        for key, value in filter(lambda x: x[1] > 0, weight_obj.items()):
+            message["weights"].append(
+                etf_service_pb3.SectorWeights(sector_name=key, sector_weight=value)
+            )
+            data["weights"].append(
+                {
+                    "sector_name": key,
+                    "sector_weight": value,
+                }
+            )
     data["expense_ratio"] = etf_specifics.fund_profile[ticker][
         "feesExpensesInvestment"
     ]["annualReportExpenseRatio"]
@@ -32,24 +49,14 @@ class EtfServiceServicer(etf_service_pb3_grpc.EtfServiceServicer):
         self.db = db_collection[collection_name]
 
     async def GetEtf(self, request, context):
-        # data, spec = {}, {}
-        # specifics_task = asyncio.create_task(get_specifics(request.yahoo_symbol, spec))
-
-        # etf = yf.Ticker(request.yahoo_symbol)
-        # etf_info = etf.get_info()
-        # data["name"] = etf_info["longName"]
-        # data["currency"] = etf_info["currency"]
-        # data["yahoo_symbol"] = etf_info["symbol"]
-
-        # await specifics_task
-        res = self.db.find({"yahoo_symbol": request.yahoo_symbol})
-        for r in res:
-            print(r)
-        return etf_service_pb3.Etf()
+        res = self.db.find_one({"yahoo_symbol": request.yahoo_symbol}, {"_id": False})
+        return etf_service_pb3.Etf(**res)
 
     async def AddEtf(self, request, context):
-        data, spec = {}, {}
-        specifics_task = asyncio.create_task(get_specifics(request.yahoo_symbol, spec))
+        data, spec, mesage = {}, {}, {}
+        specifics_task = asyncio.create_task(
+            get_specifics(request.yahoo_symbol, spec, mesage)
+        )
 
         etf = yf.Ticker(request.yahoo_symbol)
         etf_info = etf.get_info()
@@ -57,11 +64,12 @@ class EtfServiceServicer(etf_service_pb3_grpc.EtfServiceServicer):
         data["currency"] = etf_info["currency"]
         data["yahoo_symbol"] = etf_info["symbol"]
         data["last_close"] = etf_info["previousClose"]
-        # data["total_assets"] = etf_info["totalAssets"]
+        data["total_assets"] = 0
 
         await specifics_task
 
-        etf_data = {**data, **spec}
-        self.db.insert_one(etf_data)
+        etf_db_data = {**data, **spec}
+        etf_message = {**mesage, **spec}
+        self.db.insert_one(etf_db_data)
 
-        return etf_service_pb3.Etf(**etf_data)
+        return etf_service_pb3.Etf(**etf_message)

@@ -6,13 +6,13 @@ services:
     restart: always
     command:
       - --auth
-    ports:
-      - "27017:27017"
+    # ports:
+    #   - "27017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
     env_file: .env
 
   mongo-express:
@@ -25,3 +25,15 @@ services:
       - "8081:8081"
     depends_on:
       - mongo-db
+
+  grpc-etf-server:
+    container_name: grpc-etf-server
+    build:
+      context: .
+      dockerfile: ./etf_service/Dockerfile
+    restart: always
+    ports:
+      - "50051:50051"
+    depends_on:
+      - mongo-db
+    env_file: .env

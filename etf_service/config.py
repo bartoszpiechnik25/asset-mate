@@ -10,5 +10,5 @@ def get_config() -> dict:
 
 
 def get_db(config: dict):
-    client = pymongo.MongoClient("mongodb://admin:password@localhost:27017")
+    client = pymongo.MongoClient(config["MONGO_URL"])
     return client.get_database(config["MONGO_DATABASE"])
