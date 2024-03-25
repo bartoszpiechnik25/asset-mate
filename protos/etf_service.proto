@@ -22,6 +22,18 @@ message Etf {
     float last_close = 8;
 }
 
+message EtfPerformance {
+    float ytd = 1;
+    float one_month = 2;
+    float three_months = 3;
+    float six_months = 4;
+    float one_year = 5;
+    float three_years = 6;
+    float five_years = 7;
+    float max = 8;
+    float last_close = 9;
+}
+
 message GetEtfByName {
     string name = 1;
 }
@@ -33,4 +45,5 @@ message EtfByTicker {
 service EtfService {
     rpc GetEtf (EtfByTicker) returns (Etf) {}
     rpc AddEtf (EtfByTicker) returns (Etf) {}
+    rpc GetEtfPerformance (EtfByTicker) returns (EtfPerformance) {}
 }

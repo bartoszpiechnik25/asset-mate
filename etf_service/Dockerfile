@@ -1,13 +1,11 @@
 FROM python:3.11.8-slim
 
-WORKDIR /app
-
-COPY .. /app/
-
 WORKDIR /app/etf_service
+
+ADD ./etf_service/requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY ../.env /app/.env
+COPY . /app/
 
 ENTRYPOINT [ "python", "-u", "main.py" ]

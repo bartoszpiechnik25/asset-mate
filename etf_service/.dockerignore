@@ -1,5 +1,0 @@
-__pycache__
-.git
-.pre-commit-config.yaml
-.gitignore
-docker-compose.yml
