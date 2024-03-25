@@ -5,6 +5,7 @@ charset-normalizer==3.3.2
 dnspython==2.6.1
 frozendict==2.4.0
 grpcio==1.62.1
+grpcio-reflection==1.62.1
 grpcio-tools==1.62.1
 html5lib==1.1
 idna==3.6
