@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Table(name = "symbol_performance")
 public class SymbolPerformance {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ColumnDefault("nextval('symbol_performance_performance_id_seq'")
     @Column(name = "performance_id", nullable = false)
     private Integer id;
@@ -34,8 +35,8 @@ public class SymbolPerformance {
     private BigDecimal oneYear;
 
     @ColumnDefault("0")
-    @Column(name = "tree_years")
-    private BigDecimal treeYears;
+    @Column(name = "three_years")
+    private BigDecimal threeYears;
 
     @ColumnDefault("0")
     @Column(name = "five_years")
@@ -97,12 +98,12 @@ public class SymbolPerformance {
         this.oneYear = oneYear;
     }
 
-    public BigDecimal getTreeYears() {
-        return treeYears;
+    public BigDecimal getThreeYears() {
+        return threeYears;
     }
 
-    public void setTreeYears(BigDecimal treeYears) {
-        this.treeYears = treeYears;
+    public void setThreeYears(BigDecimal threeYears) {
+        this.threeYears = threeYears;
     }
 
     public BigDecimal getFiveYears() {

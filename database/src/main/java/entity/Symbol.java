@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Table(name = "symbol")
 public class Symbol {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ColumnDefault("nextval('symbol_id_seq'")
     @Column(name = "symbol_id", nullable = false)
     private Integer id;
@@ -14,9 +15,8 @@ public class Symbol {
     @Column(name = "yahoo_symbol", nullable = false, length = Integer.MAX_VALUE)
     private String yahooSymbol;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "instrument_type_id", nullable = false)
-    private InstrumentType instrumentType;
+    @Column(name = "instrument_type_id", nullable = false)
+    private Integer instrumentTypeId;
 
     public Integer getId() {
         return id;
@@ -34,12 +34,12 @@ public class Symbol {
         this.yahooSymbol = yahooSymbol;
     }
 
-    public InstrumentType getInstrumentType() {
-        return instrumentType;
+    public Integer getInstrumentTypeId() {
+        return instrumentTypeId;
     }
 
-    public void setInstrumentType(InstrumentType instrumentType) {
-        this.instrumentType = instrumentType;
+    public void setInstrumentTypeId(Integer instrumentTypeId) {
+        this.instrumentTypeId = instrumentTypeId;
     }
 
 }

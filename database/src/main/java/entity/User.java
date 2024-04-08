@@ -1,9 +1,6 @@
 package entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.UUID;
@@ -12,6 +9,7 @@ import java.util.UUID;
 @Table(name = "\"user\"")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ColumnDefault("uuid_generate_v4()")
     @Column(name = "user_id", nullable = false)
     private UUID id;
@@ -24,6 +22,17 @@ public class User {
 
     @Column(name = "email", nullable = false, length = Integer.MAX_VALUE)
     private String email;
+
+    @Column(name = "name", length = Integer.MAX_VALUE)
+    private String name;
+
+    @Column(name = "surname", length = Integer.MAX_VALUE)
+    private String surname;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ColumnDefault("1")
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
     public UUID getId() {
         return id;
@@ -55,6 +64,30 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
 }

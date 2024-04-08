@@ -6,13 +6,20 @@
   <persistence-unit name="default">
     <class>entity.CryptocurrencyCategory</class>
     <class>entity.CryptocurrencyWthCategory</class>
+    <class>entity.Cryptocurrency</class>
     <class>entity.Currency</class>
     <class>entity.Etf</class>
     <class>entity.InstrumentType</class>
     <class>entity.Investment</class>
+    <class>entity.InvestmentHistory</class>
+    <class>entity.Role</class>
+    <class>entity.Stock</class>
+    <class>entity.StockIndustry</class>
+    <class>entity.StockSector</class>
     <class>entity.Symbol</class>
     <class>entity.SymbolPerformance</class>
     <class>entity.User</class>
+    <class>entity.UserFavourite</class>
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
       <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>

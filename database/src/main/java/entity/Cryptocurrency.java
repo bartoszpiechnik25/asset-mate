@@ -6,10 +6,11 @@ import jakarta.persistence.*;
 @Table(name = "cryptocurrency")
 public class Cryptocurrency {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "crypto_id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "symbol_id", nullable = false)
     private Symbol symbol;
 
@@ -25,11 +26,11 @@ public class Cryptocurrency {
     @Column(name = "gecko_id", nullable = false, length = Integer.MAX_VALUE)
     private String geckoId;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

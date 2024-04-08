@@ -5,26 +5,22 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "investment")
 public class Investment {
     @Id
-    @ColumnDefault("nextval('investment_investment_id_seq'")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ColumnDefault("uuid_generate_v4()")
     @Column(name = "investment_id", nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(name = "open_price", nullable = false)
     private BigDecimal openPrice;
 
-    @Column(name = "close_price")
-    private BigDecimal closePrice;
-
     @Column(name = "acquired_at", nullable = false)
     private OffsetDateTime acquiredAt;
-
-    @Column(name = "closed_at")
-    private OffsetDateTime closedAt;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -41,11 +37,11 @@ public class Investment {
     @JoinColumn(name = "symbol_id", nullable = false)
     private Symbol symbol;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -57,28 +53,12 @@ public class Investment {
         this.openPrice = openPrice;
     }
 
-    public BigDecimal getClosePrice() {
-        return closePrice;
-    }
-
-    public void setClosePrice(BigDecimal closePrice) {
-        this.closePrice = closePrice;
-    }
-
     public OffsetDateTime getAcquiredAt() {
         return acquiredAt;
     }
 
     public void setAcquiredAt(OffsetDateTime acquiredAt) {
         this.acquiredAt = acquiredAt;
-    }
-
-    public OffsetDateTime getClosedAt() {
-        return closedAt;
-    }
-
-    public void setClosedAt(OffsetDateTime closedAt) {
-        this.closedAt = closedAt;
     }
 
     public User getUser() {
@@ -113,4 +93,11 @@ public class Investment {
         this.symbol = symbol;
     }
 
+/*
+ TODO [Reverse Engineering] create field to map the 'transaction_type' column
+ Available actions: Define target Java type | Uncomment as is | Remove column mapping
+    @ColumnDefault("buy")
+    @Column(name = "transaction_type", columnDefinition = "transaction_type not null")
+    private Object transactionType;
+*/
 }
