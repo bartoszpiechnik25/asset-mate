@@ -1,4 +1,4 @@
-FROM python:3.11.8-slim
+FROM python:3.11.8-alpine3.19
 
 WORKDIR /app/etf_service
 

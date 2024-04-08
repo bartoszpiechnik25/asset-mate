@@ -5,6 +5,6 @@ db
 protos
 .pre-commit-config.yaml
 docker-compose.yml
-__pycache__
+__pycache__/
 etf_service/client.py
 etf_service/Dockerfile
