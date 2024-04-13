@@ -1,0 +1,93 @@
+:root{
+font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  background-color: #222831;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.login-container {
+    background-color:  #EEEEEE;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 11rem;
+    border-radius: 2rem;
+}
+
+.blueish-button {
+    background-color: #00ADB5;
+    color: white;
+    padding: 0.6rem 1rem;
+    border: none;
+    transition: transform 0.15s ease-in-out;
+    outline: none;
+}
+
+.blueish-button:active {
+    outline: none;
+    transform: scale(0.95);
+}
+
+.blueish-button:hover {
+    outline: none;
+}
+.blueish-button:focus {
+    outline: none;
+}
+
+.login-container h1 {
+    color: black;
+    font-size: 2.2rem;
+    padding: 1rem 2rem;
+    margin: 0;
+    font-weight: 6000;
+}
+
+.login-container h2 {
+    color: #00ADB5;
+    text-align: left;
+    font-size: 1.2rem;
+    margin-bottom: 0;
+    margin-top: 2rem;
+    font-weight: 450;
+}
+
+.login-container input {
+    padding: 0.8rem 1rem 0 0.1rem;
+    border-width: 0 0 0.1rem;
+    border-color:black;
+    font-size: 1rem;
+    color: #000;
+    background-color: #EEEEEE;
+}
+.login-container input:focus {
+    outline: 0;
+    border-width: 0 0 0.2rem;
+    border-color:black;
+}
+
+.login-container a {
+    margin-top: 1.5rem;
+    text-align: right;
+    font-size: 0.9rem;
+    color: #393E46;
+}
+
+.login-container .blueish-button {
+    margin-top: 1.1rem;
+}
+
+@media screen and (max-width: 660px) {
+    .login-container {
+        padding: 4rem 2rem;
+        border-radius: 1rem;
+    }
+    :root {
+        font-size: 13px;;
+    }
+}
