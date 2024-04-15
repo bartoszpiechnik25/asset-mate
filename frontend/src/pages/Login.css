@@ -3,7 +3,7 @@ font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  background-color: #222831;
+  /* background-color: #222831; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -11,7 +11,18 @@ font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.login {
+    padding-top: 5rem;
+    /* max-width: 1280px; */
+    display: flex;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
 .login-container {
+    max-width: 100%;
     background-color:  #EEEEEE;
     display: flex;
     flex-direction: column;
