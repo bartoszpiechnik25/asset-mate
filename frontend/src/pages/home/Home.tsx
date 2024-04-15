@@ -3,7 +3,8 @@ import PaneWithTab from "../../components/PaneWithTab";
 import SearchBar from "../../components/search-bar/SearchBar";
 import InstrumentTypeMenu from "../../components/financial-instruments/InstrumentTypeMenu";
 import "./Home.css";
-import Asset from "../../components/financial-instruments/Asset";
+import Asset, { AssetColumns } from "../../components/financial-instruments/Asset";
+import SummaryFooter from "../../components/summary-footer/SummaryFooter";
 
 function Home() {
     document.body.style.backgroundColor = "black";
@@ -20,6 +21,7 @@ function Home() {
                     className="instrument-pane">
                     <InstrumentTypeMenu />
                     <SearchBar placeholder="Search eg. Nvidia" />
+                    <AssetColumns/>
                     <Asset
                         symbol="NVDA"
                         type="Stock"
@@ -67,6 +69,9 @@ function Home() {
                     ]}
                     paneText="Portfolio"
                     className="investments-pane"
+                />
+                <SummaryFooter
+                    profit={123}
                 />
         </div>
     )

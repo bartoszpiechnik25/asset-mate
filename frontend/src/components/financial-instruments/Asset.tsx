@@ -22,4 +22,16 @@ const Asset: React.FC<AssetProps> = ({symbol, type, description, idx}) => {
     )
 }
 
+const AssetColumns: React.FC = () => {
+    return (
+        <div className="assets-table-header">
+            <p id="symbol-column">Symbol</p>
+            <p id="description-column">Description</p>
+            <p id="type-column">Type</p>
+            <p id="info-column">Info</p>
+        </div>
+    )
+}
+
+export {AssetColumns};
 export default Asset;

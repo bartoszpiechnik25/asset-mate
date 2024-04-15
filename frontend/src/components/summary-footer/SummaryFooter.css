@@ -1,0 +1,20 @@
+.summary-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width:99%;
+    height: 6vh;
+    background-color: #222831;
+    margin-top: 2vh;
+}
+
+.summary-text {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    font-size: 3vh;
+}
+
+.summary-text p {
+    margin-right: 2vh;
+}
