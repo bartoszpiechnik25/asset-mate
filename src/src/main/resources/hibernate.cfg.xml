@@ -1,0 +1,36 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/postgres</property>
+        <property name="connection.driver_mapping class=">org.postgresql.Driver</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">pass</property>
+
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hbm2ddl.auto">update</property>
+
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+
+        <mapping class="com.bartoszpiechnik25.entity.CryptocurrencyCategory"/>
+        <mapping class="com.bartoszpiechnik25.entity.Cryptocurrency"/>
+        <mapping class="com.bartoszpiechnik25.entity.CryptocurrencyWthCategory"/>
+        <mapping class="com.bartoszpiechnik25.entity.Currency"/>
+        <mapping class="com.bartoszpiechnik25.entity.Etf"/>
+        <mapping class="com.bartoszpiechnik25.entity.InstrumentType"/>
+        <mapping class="com.bartoszpiechnik25.entity.Investment"/>
+        <mapping class="com.bartoszpiechnik25.entity.InvestmentHistory"/>
+        <mapping class="com.bartoszpiechnik25.entity.Role"/>
+        <mapping class="com.bartoszpiechnik25.entity.Stock"/>
+        <mapping class="com.bartoszpiechnik25.entity.StockIndustry"/>
+        <mapping class="com.bartoszpiechnik25.entity.StockSector"/>
+        <mapping class="com.bartoszpiechnik25.entity.Symbol"/>
+        <mapping class="com.bartoszpiechnik25.entity.SymbolPerformance"/>
+        <mapping class="com.bartoszpiechnik25.entity.User"/>
+        <mapping class="com.bartoszpiechnik25.entity.UserFavourite"/>
+        <mapping class="com.bartoszpiechnik25.entity.StockIndustry"/>
+    </session-factory>
+</hibernate-configuration>
