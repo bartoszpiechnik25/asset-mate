@@ -1,9 +1,8 @@
-import React from "react";
 import "./Login.css";
-import Button from "../components/Button";
+import Button from "../../components/button/Button";
 
 function Login() {
-    document.body.style.backgroundColor = "#222831";    
+    document.body.style.backgroundColor = "#222831";
     return (
         <div className="login">
             <div className="login-container">

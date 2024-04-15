@@ -1,0 +1,18 @@
+.search-bar {
+    margin: 2rem 0;
+    background-color: #393E46;
+    text-align: left;
+    margin-left: 1.2rem;
+    width: 40%;
+    padding: 0.2rem;
+}
+
+.search-input {
+    background-color: #393E46;
+    color: #979797;
+    border: none;
+    outline: 0;
+}
+.search-input[type=text] {
+    width: 99%;
+}

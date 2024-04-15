@@ -1,0 +1,24 @@
+.blueish-button {
+    background-color: #00ADB5;
+    color: white;
+    padding: 0.6rem 1rem;
+    border: none;
+    transition: transform 0.15s ease-in-out;
+    outline: none;
+}
+
+.blueish-button:active {
+    outline: none;
+    transform: scale(0.95);
+}
+
+.blueish-button:hover {
+    outline: none;
+}
+.blueish-button:focus {
+    outline: none;
+}
+
+input + .blueish-button {
+    margin-top: 2rem;
+}

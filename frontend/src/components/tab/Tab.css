@@ -1,0 +1,15 @@
+.tab {
+    cursor: pointer;
+    background-color: #222831;
+    width: fit-content;
+    padding: 0.2rem 1.2rem;
+    font-size: 14px;
+}
+
+.inactive-tab {
+    cursor: pointer;
+    background-color: #393E46;
+    width: fit-content;
+    padding: 0.2rem 1.2rem;
+    font-size: 14px;
+}
