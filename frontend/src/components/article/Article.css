@@ -1,0 +1,21 @@
+.article {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1.2rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    /* border-bottom: thin solid #979797; */
+}
+
+.article-title {
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin: 0;
+    text-align: left;
+}
+
+.article-summary {
+    font-size: 0.8rem;
+    margin: 0;
+    text-align: left;
+}

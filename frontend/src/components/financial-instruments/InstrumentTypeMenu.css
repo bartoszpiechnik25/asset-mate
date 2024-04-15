@@ -1,0 +1,15 @@
+.instrument-type {
+    padding-right: 2rem;
+    padding-bottom: 0.1rem;
+    color:#979797;
+    cursor: pointer;
+    font-size: 2vh;
+}
+
+.instrument-type-menu {
+    margin-left: 1.2rem;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    border-bottom:thin solid #393E46;
+}
