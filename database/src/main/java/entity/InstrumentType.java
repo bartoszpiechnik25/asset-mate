@@ -1,27 +1,24 @@
 package entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "instrument_type")
 public class InstrumentType {
     @Id
-    @ColumnDefault("nextval('instrument_type_instrument_type_id_seq'")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "instrument_type_id", nullable = false)
-    private Short id;
+    private Integer id;
 
-    @Column(name = "instrument_type_name", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "instrument_type_name", nullable = false, length = 64)
     private String instrumentTypeName;
 
-    public Short getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Short id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

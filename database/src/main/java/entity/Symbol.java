@@ -3,26 +3,28 @@ package entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "symbol")
 public class Symbol {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("nextval('symbol_id_seq'")
+    @ColumnDefault("uuid_generate_v4()")
     @Column(name = "symbol_id", nullable = false)
-    private Integer id;
+    private UUID id;
 
-    @Column(name = "yahoo_symbol", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "yahoo_symbol", nullable = false, length = 15)
     private String yahooSymbol;
 
-    @Column(name = "instrument_type_id", nullable = false)
-    private Integer instrumentTypeId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "instrument_type_id", nullable = false)
+    private InstrumentType instrumentType;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -34,12 +36,12 @@ public class Symbol {
         this.yahooSymbol = yahooSymbol;
     }
 
-    public Integer getInstrumentTypeId() {
-        return instrumentTypeId;
+    public InstrumentType getInstrumentType() {
+        return instrumentType;
     }
 
-    public void setInstrumentTypeId(Integer instrumentTypeId) {
-        this.instrumentTypeId = instrumentTypeId;
+    public void setInstrumentTypeId(InstrumentType instrumentType) {
+        this.instrumentType = instrumentType;
     }
 
 }

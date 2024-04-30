@@ -1,36 +1,39 @@
 package entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "cryptocurrency")
 public class Cryptocurrency {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ColumnDefault("uuid_generate_v4()")
     @Column(name = "crypto_id", nullable = false)
-    private Long id;
+    private UUID id;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "symbol_id", nullable = false)
     private Symbol symbol;
 
-    @Column(name = "crypto_symbol", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "crypto_symbol", nullable = false, length = 20)
     private String cryptoSymbol;
 
     @Column(name = "description", nullable = false, length = Integer.MAX_VALUE)
     private String description;
 
-    @Column(name = "name", length = Integer.MAX_VALUE)
+    @Column(name = "name", length = 64)
     private String name;
 
     @Column(name = "gecko_id", nullable = false, length = Integer.MAX_VALUE)
     private String geckoId;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

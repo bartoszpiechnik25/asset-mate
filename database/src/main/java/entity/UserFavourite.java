@@ -3,14 +3,15 @@ package entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "user_favourites")
 public class UserFavourite {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("nextval('user_favourites_favourite_id_seq'")
+    @ColumnDefault("uuid_generate_v4()")
     @Column(name = "favourite_id", nullable = false)
-    private Long id;
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "symbol_id", nullable = false)
@@ -20,11 +21,11 @@ public class UserFavourite {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

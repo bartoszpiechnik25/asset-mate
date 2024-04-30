@@ -4,15 +4,16 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
 @Table(name = "symbol_performance")
 public class SymbolPerformance {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("nextval('symbol_performance_performance_id_seq'")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ColumnDefault("uuid_generate_v4()")
     @Column(name = "performance_id", nullable = false)
-    private Integer id;
+    private UUID id;
 
     @ColumnDefault("0")
     @Column(name = "ytd")
@@ -50,11 +51,11 @@ public class SymbolPerformance {
     @JoinColumn(name = "symbol_id")
     private Symbol symbol;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

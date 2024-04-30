@@ -1,27 +1,24 @@
 package entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "cryptocurrency_category")
 public class CryptocurrencyCategory {
     @Id
-    @ColumnDefault("nextval('cryptocurrency_category_category_id_seq'")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id", nullable = false)
-    private Short id;
+    private Integer id;
 
-    @Column(name = "category_name", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "category_name", nullable = false, length = 60)
     private String categoryName;
 
-    public Short getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Short id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
