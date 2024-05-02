@@ -6,23 +6,24 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.util.Map;
+import java.util.UUID;
 
 @Entity
 @Table(name = "etf")
 public class Etf {
     @Id
-    @ColumnDefault("nextval('etf_etf_id_seq'")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "etf_id", nullable = false)
-    private Integer id;
+    private UUID id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "symbol_id")
     private Symbol symbol;
 
-    @Column(name = "isin", length = Integer.MAX_VALUE)
+    @Column(name = "isin", length = 30)
     private String isin;
 
-    @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "name", nullable = false, length = 64)
     private String name;
 
     @ColumnDefault("0")
@@ -40,11 +41,11 @@ public class Etf {
     @JdbcTypeCode(SqlTypes.JSON)
     private Map<String, Object> weights;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

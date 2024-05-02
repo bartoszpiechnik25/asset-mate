@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "cryptocurrency_wth_category")
 public class CryptocurrencyWthCategory {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cwc_id", nullable = false)
     private Integer id;
 

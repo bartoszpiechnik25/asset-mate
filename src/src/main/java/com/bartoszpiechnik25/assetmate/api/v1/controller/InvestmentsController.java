@@ -1,4 +1,4 @@
-package com.bartoszpiechnik25.assetmate.controller.v1;
+package com.bartoszpiechnik25.assetmate.api.v1.controller;
 
 import com.bartoszpiechnik25.entity.Investment;
 import com.bartoszpiechnik25.entity.InvestmentHistory;
@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/v1/investments")
+@RequestMapping("/api/v1/investments")
 public class InvestmentsController {
     @GetMapping
     ResponseEntity<List<Investment>> getInvestments(@RequestParam(required = false) Map<String, String> params) {

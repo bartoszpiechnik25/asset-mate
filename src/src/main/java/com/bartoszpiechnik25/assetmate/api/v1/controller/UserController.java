@@ -1,22 +1,19 @@
-package com.bartoszpiechnik25.assetmate.controller.v1;
+package com.bartoszpiechnik25.assetmate.api.v1.controller;
 
-import com.bartoszpiechnik25.assetmate.repository.RoleRepository;
-import com.bartoszpiechnik25.assetmate.repository.UserRepository;
 import com.bartoszpiechnik25.entity.*;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     @GetMapping
+    @Transactional
     public ResponseEntity<List<User>> getUsers() {
         return null;
     }

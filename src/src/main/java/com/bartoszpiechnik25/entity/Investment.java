@@ -11,11 +11,11 @@ import java.util.UUID;
 @Table(name = "investment")
 public class Investment {
     @Id
-    @ColumnDefault("uuid_generate_v4()")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "investment_id", nullable = false)
     private UUID id;
 
-    @Column(name = "open_price", nullable = false, precision = 38, scale = 2)
+    @Column(name = "open_price", nullable = false)
     private BigDecimal openPrice;
 
     @Column(name = "acquired_at", nullable = false)
@@ -29,7 +29,7 @@ public class Investment {
     @JoinColumn(name = "currency_name", nullable = false)
     private Currency currencyName;
 
-    @Column(name = "volume", nullable = false, precision = 38, scale = 2)
+    @Column(name = "volume", nullable = false)
     private BigDecimal volume;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

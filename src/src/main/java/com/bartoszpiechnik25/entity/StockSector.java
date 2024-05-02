@@ -1,27 +1,24 @@
 package com.bartoszpiechnik25.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "stock_sector")
 public class StockSector {
     @Id
-    @ColumnDefault("nextval('stock_sector_sector_id_seq'")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sector_id", nullable = false)
-    private Short id;
+    private Integer id;
 
-    @Column(name = "sector_name", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "sector_name", nullable = false, length = 64)
     private String sectorName;
 
-    public Short getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Short id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

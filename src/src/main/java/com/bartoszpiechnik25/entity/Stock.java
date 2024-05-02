@@ -9,7 +9,7 @@ import java.util.UUID;
 @Table(name = "stock")
 public class Stock {
     @Id
-    @ColumnDefault("uuid_generate_v4()")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "stock_id", nullable = false)
     private UUID id;
 

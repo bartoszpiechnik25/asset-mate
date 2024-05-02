@@ -4,56 +4,57 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
 @Table(name = "symbol_performance")
 public class SymbolPerformance {
     @Id
-    @ColumnDefault("nextval('symbol_performance_performance_id_seq'")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "performance_id", nullable = false)
-    private Integer id;
+    private UUID id;
 
     @ColumnDefault("0")
-    @Column(name = "ytd", precision = 38, scale = 2)
+    @Column(name = "ytd")
     private BigDecimal ytd;
 
     @ColumnDefault("0")
-    @Column(name = "one_month", precision = 38, scale = 2)
+    @Column(name = "one_month")
     private BigDecimal oneMonth;
 
     @ColumnDefault("0")
-    @Column(name = "three_months", precision = 38, scale = 2)
+    @Column(name = "three_months")
     private BigDecimal threeMonths;
 
     @ColumnDefault("0")
-    @Column(name = "six_month", precision = 38, scale = 2)
+    @Column(name = "six_month")
     private BigDecimal sixMonth;
 
     @ColumnDefault("0")
-    @Column(name = "one_year", precision = 38, scale = 2)
+    @Column(name = "one_year")
     private BigDecimal oneYear;
 
     @ColumnDefault("0")
-    @Column(name = "three_years", precision = 38, scale = 2)
+    @Column(name = "three_years")
     private BigDecimal threeYears;
 
     @ColumnDefault("0")
-    @Column(name = "five_years", precision = 38, scale = 2)
+    @Column(name = "five_years")
     private BigDecimal fiveYears;
 
     @ColumnDefault("0")
-    @Column(name = "max", precision = 38, scale = 2)
+    @Column(name = "max")
     private BigDecimal max;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "symbol_id")
     private Symbol symbol;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -11,11 +11,11 @@ import java.util.UUID;
 @Table(name = "investment_history")
 public class InvestmentHistory {
     @Id
-    @ColumnDefault("uuid_generate_v4()")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "history_id", nullable = false)
     private UUID id;
 
-    @Column(name = "close_price", nullable = false, precision = 38, scale = 2)
+    @Column(name = "close_price", nullable = false)
     private BigDecimal closePrice;
 
     @Column(name = "closed_at", nullable = false)

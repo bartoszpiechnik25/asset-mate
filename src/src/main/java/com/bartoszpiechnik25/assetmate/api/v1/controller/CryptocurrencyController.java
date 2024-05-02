@@ -1,10 +1,7 @@
-package com.bartoszpiechnik25.assetmate.controller.v1;
+package com.bartoszpiechnik25.assetmate.api.v1.controller;
 
 import com.bartoszpiechnik25.entity.Cryptocurrency;
 import com.bartoszpiechnik25.entity.CryptocurrencyCategory;
-import com.bartoszpiechnik25.entity.InstrumentType;
-import com.bartoszpiechnik25.entity.Symbol;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/v1/cryptocurrencies")
+@RequestMapping("/api/v1/cryptocurrencies")
 public class CryptocurrencyController {
     @GetMapping
     public ResponseEntity<List<Cryptocurrency>> getCryptocurrencies(@RequestParam(required = false) Map<String, String> params) {

@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 @Table(name = "currency")
 public class Currency {
     @Id
-    @Column(name = "currency_name", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "currency_name", nullable = false, length = 10)
     private String currencyName;
 
     public String getCurrencyName() {
