@@ -6,14 +6,17 @@ import Login from './pages/login/Login'
 import Home from './pages/home/Home'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Register from './pages/register/Register'
+import PrivateRoutes from './components/private-route/PrivateRoutes'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main/>}/>
+        <Route element={<PrivateRoutes/>}>
+          <Route path="/" element={<Home/>} />
+          {/* <Route path="/" element={<Main/>}/> */}
+        </Route>
         <Route path="/login" element={<Login/>} />
-        <Route path="/home" element={<Home/>} />
         <Route path="/register" element={<Register/>}/>
       </Routes>
     </BrowserRouter>

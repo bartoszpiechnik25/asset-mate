@@ -7,11 +7,12 @@ import com.bartoszpiechnik25.assetmate.api.v1.dto.request.AuthenticationRequest;
 import com.bartoszpiechnik25.assetmate.api.v1.dto.response.AuthenticationResponse;
 import com.bartoszpiechnik25.assetmate.api.v1.dto.request.RegisterRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -29,9 +30,36 @@ public class AuthController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> register(
+    public ResponseEntity<?> register(
             @RequestBody AuthenticationRequest request
     ) {
-        return ResponseEntity.ok(service.authenticate(request));
+        AuthenticationResponse response = null;
+        try {
+            response = service.authenticate(request);
+        } catch (java.util.NoSuchElementException e) {
+            HttpHeaders h = new HttpHeaders();
+            h.add("Content-Type", "application/json; charset=utf-8");
+            return new ResponseEntity<>(
+                    Map.of("messasge", "user not found"),
+                    h,
+                    HttpStatus.NOT_FOUND
+            );
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<?> userExists(@PathVariable String username) {
+        var user = userRepository.findByUsername(username);
+        if (!user.isPresent()) {
+            HttpHeaders h = new HttpHeaders();
+            h.add("Content-Type", "application/json; charset=utf-8");
+            return new ResponseEntity<>(
+                    Map.of("messasge", "user not found"),
+                    h,
+                    HttpStatus.NOT_FOUND
+            );
+        }
+        return ResponseEntity.noContent().build();
     }
 }

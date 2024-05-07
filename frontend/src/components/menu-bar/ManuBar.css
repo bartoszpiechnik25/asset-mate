@@ -1,0 +1,11 @@
+#menu-bar {
+    display: flex;
+    justify-content: right;
+    flex-direction: row;
+    margin-right: 1rem;
+}
+
+.icon-wrapper {
+    margin-left: 1rem;
+    cursor: pointer;
+}

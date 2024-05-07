@@ -2,7 +2,7 @@
     display: flex;
     color: #979797;
     flex-direction: row;
-    font-size: 2.5vh;
+    font-size: 1em;
     font-weight: 400;
     width: 96%;
     padding-left: 1.2rem
@@ -68,13 +68,12 @@
     display: flex;
     align-items: center;
     width: 13%;
-    font-size: 2vh;
+    font-size: 0.9em;
 }
 
 .asset-description {
     font-weight: 300;
     padding-right: 1rem;
-    font-size: 0.8rem;
     display: flex;
     align-items: center;
     width: 50%;
@@ -82,7 +81,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-right:7%;
-    font-size: 2vh;
+    font-size: 0.8em;
 }
 
 .asset-type {
@@ -91,7 +90,7 @@
     display: flex;
     align-items: center;
     width: 15%;
-    font-size: 2vh;
+    font-size: 0.9em;
 }
 
 .info-icon {

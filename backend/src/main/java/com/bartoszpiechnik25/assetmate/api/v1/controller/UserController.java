@@ -21,10 +21,7 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return null;
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable UUID id) {
-        return null;
-    }
+
     @PostMapping("/{user_id}/favourites")
     public ResponseEntity<Symbol> addInvestmentToFavourites(@PathVariable UUID user_id, @RequestBody Investment investment) {
         return null;

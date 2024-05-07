@@ -1,3 +1,4 @@
+import { Info } from "@mui/icons-material";
 import "./Asset.css";
 
 interface AssetProps {
@@ -17,7 +18,9 @@ const Asset: React.FC<AssetProps> = ({symbol, type, description, idx}) => {
             <p className="asset-name">{symbol}</p>
             <p className="asset-description">{description}</p>
             <p className="asset-type">{type}</p>
-            <div className="info-icon">info</div>
+            <div className="info-icon">
+                <Info/>
+            </div>
         </div>
     )
 }

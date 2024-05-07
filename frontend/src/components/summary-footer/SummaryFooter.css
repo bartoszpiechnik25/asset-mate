@@ -12,7 +12,7 @@
     display: flex;
     align-items: center;
     flex-direction: row;
-    font-size: 3vh;
+    font-size: 1.2em;
 }
 
 .summary-text p {

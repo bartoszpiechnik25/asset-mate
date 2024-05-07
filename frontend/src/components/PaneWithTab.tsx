@@ -6,9 +6,10 @@ import Pane, { IPane } from "./panes/PaneInterface";
 interface PaneWithTabProps extends IPane {
     tabs: TabProps[];
     children?: React.ReactNode;
+    icons?: React.ReactNode;
 }
 
-const PaneWithTab: React.FC<PaneWithTabProps> = ({tabs, paneText, className, children}) => {
+const PaneWithTab: React.FC<PaneWithTabProps> = ({tabs, paneText, className, children, icons}) => {
     return (
         <div className="pane-tab">
             <div className="tab-container">

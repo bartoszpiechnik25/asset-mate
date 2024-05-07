@@ -5,11 +5,24 @@ import InstrumentTypeMenu from "../../components/financial-instruments/Instrumen
 import "./Home.css";
 import Asset, { AssetColumns } from "../../components/financial-instruments/Asset";
 import SummaryFooter from "../../components/summary-footer/SummaryFooter";
+import MenuButtons from "../../components/menu-bar/MenuBar";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
     document.body.style.backgroundColor = "black";
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+    }
     return (
         <div className="home-page">
+            <MenuButtons
+                logoutHandler={()=>{handleLogout()}}
+                menuHandler={() => {console.log("menu handler")}}
+                />
             <div className="vertical-panes">
                 <PaneWithTab
                     tabs= {
@@ -22,17 +35,30 @@ function Home() {
                     <InstrumentTypeMenu />
                     <SearchBar placeholder="Search eg. Nvidia" />
                     <AssetColumns/>
-                    <Asset
-                        symbol="NVDA"
-                        type="Stock"
-                        description="Nvidia is a leading company in the GPU market. Trending thanks to AI."
-                        idx={0}
-                    />
-                    <Asset
-                        symbol="XDWT.DE"
-                        type="ETF"
-                        description="MSCI World Information Technology"
-                        idx={1}
+                        <Asset
+                            symbol="NVDA"
+                            type="Stock"
+                            description="Nvidia is a leading company in the GPU market. Trending thanks to AI."
+                            idx={0}
+                        />
+                        <Asset
+                            symbol="XDWT.DE"
+                            type="ETF"
+                            description="MSCI World Information Technology"
+                            idx={1}
+                            />
+                        
+                        <Asset
+                            symbol="XDWT.DE"
+                            type="ETF"
+                            description="MSCI World Information Technology"
+                            idx={2}
+                            />
+                        <Asset
+                            symbol="NVDA"
+                            type="Stock"
+                            description="Nvidia is a leading company in the GPU market. Trending thanks to AI."
+                            idx={3}
                         />
                 </PaneWithTab>
 
