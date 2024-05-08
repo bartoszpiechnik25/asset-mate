@@ -7,21 +7,30 @@ import Asset, { AssetColumns } from "../../components/financial-instruments/Asse
 import SummaryFooter from "../../components/summary-footer/SummaryFooter";
 import MenuButtons from "../../components/menu-bar/MenuBar";
 import { useNavigate } from "react-router-dom";
+import { isValid, setUser } from "../../hooks/useUser";
 
-function Home() {
+
+const Home = () => {
     document.body.style.backgroundColor = "black";
-
     const navigate = useNavigate();
+
+    let user = setUser();
+
+    if (user === null || !isValid(user)) {
+        navigate('/login');
+    }
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        user = null;
         navigate('/login');
     }
+
     return (
         <div className="home-page">
             <MenuButtons
-                logoutHandler={()=>{handleLogout()}}
-                menuHandler={() => {console.log("menu handler")}}
+                logoutHandler={handleLogout}
+                menuHandler={() => {console.log(user)}}
                 />
             <div className="vertical-panes">
                 <PaneWithTab

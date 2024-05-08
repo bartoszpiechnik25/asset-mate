@@ -5,7 +5,7 @@ import axios from "axios";
 
 
 
-function Login() {
+const Login = () => {
     const navigate = useNavigate();
     document.body.style.backgroundColor = "#222831";
 
@@ -18,7 +18,6 @@ function Login() {
                 alert.innerHTML = "Please fill in all fields";
             }
         }
-        console.log("request for", username, password);
         axios.post('http://localhost:8080/api/v1/auth/authenticate',
             {
                 username: username,
@@ -30,7 +29,6 @@ function Login() {
             }
         ).then((response) => {
                 localStorage.setItem('token', response.data.token)
-                console.log("response", response.data.token)
                 navigate("/");
             }
         ).catch((error) => {
