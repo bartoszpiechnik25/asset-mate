@@ -7,7 +7,6 @@ interface TabProps {
 
 const Tab: React.FC<TabProps> = ({tabText, active = true}) => {
     const tabClass = active ? "tab" : "inactive-tab";
-
     return (
         <div className={tabClass}>
             {tabText}

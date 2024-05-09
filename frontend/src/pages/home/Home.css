@@ -27,15 +27,13 @@
     width: 100%;
     height: 100%;
     margin-right: 1rem;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     flex: 1;
 }
 
 .instruments-content {
-    width: inherit;
-    /* height: 70%; */
-    max-height: inherit;
+    height: 65%;
+    scrollbar-color: green;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -44,11 +42,12 @@
     background-color: #222831;
     width: 100%;
     height: 100%;
+    scrollbar-color: green;
+    overflow: hidden;
     flex: 1
 }
 
 .pane-tab {
-    min-width: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: left;

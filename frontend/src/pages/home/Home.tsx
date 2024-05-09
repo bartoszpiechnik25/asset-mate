@@ -1,4 +1,3 @@
-import Article from "../../components/article/Article";
 import PaneWithTab from "../../components/PaneWithTab";
 import SearchBar from "../../components/search-bar/SearchBar";
 import InstrumentTypeMenu from "../../components/financial-instruments/InstrumentTypeMenu";
@@ -8,6 +7,9 @@ import SummaryFooter from "../../components/summary-footer/SummaryFooter";
 import MenuButtons from "../../components/menu-bar/MenuBar";
 import { useNavigate } from "react-router-dom";
 import { isValid, setUser } from "../../hooks/useUser";
+import { useEffect, useState } from "react";
+import { Articles, getArticles, ArticleProps } from "../../components/article/Article";
+import ArticleDetails from "../../components/article/ArticleDetails"
 
 
 const Home = () => {
@@ -25,6 +27,19 @@ const Home = () => {
         user = null;
         navigate('/login');
     }
+
+    const [showPopup, setShowPopup] = useState(false);
+    const [articleDetails, setArticleDetails] = useState(null);
+
+    const handleArticleClick = (article: any) => {
+        setArticleDetails(article);
+        setShowPopup(true);
+    };
+
+    const closePopup = () => {
+        console.log("close clicked");
+        setShowPopup(false);
+    };
 
     return (
         <div className="home-page">
@@ -44,6 +59,7 @@ const Home = () => {
                     <InstrumentTypeMenu />
                     <SearchBar placeholder="Search eg. Nvidia" />
                     <AssetColumns/>
+                    <div className="instruments-content">
                         <Asset
                             symbol="NVDA"
                             type="Stock"
@@ -69,6 +85,19 @@ const Home = () => {
                             description="Nvidia is a leading company in the GPU market. Trending thanks to AI."
                             idx={3}
                         />
+                        <Asset
+                            symbol="NVDA"
+                            type="Stock"
+                            description="Nvidia is a leading company in the GPU market. Trending thanks to AI."
+                            idx={4}
+                        />
+                        <Asset
+                            symbol="NVDA"
+                            type="Stock"
+                            description="Nvidia is a leading company in the GPU market. Trending thanks to AI."
+                            idx={5}
+                        />
+                    </div>
                 </PaneWithTab>
 
                 <PaneWithTab
@@ -80,21 +109,7 @@ const Home = () => {
                     className="news-pane"
                 >
                     <SearchBar placeholder="Find articles eg. s&p performance" />
-                    <Article
-                        title="Inflation CPI is raising"
-                        summary="Fed published the latest inflation"
-                        hyperlink=""
-                    />
-                    <Article
-                        title="Bitcoin may start to loose its reputation as a volatile asset"
-                        summary="Here is why"
-                        hyperlink=""
-                    />
-                    <Article
-                        title="New investment opportunities in the market"
-                        summary="Check out the latest IPOs"
-                        hyperlink=""
-                    />
+                    <Articles popUpTrigger={handleArticleClick}/>
                 </PaneWithTab>
             </div>
                 <PaneWithTab
@@ -108,6 +123,7 @@ const Home = () => {
                 <SummaryFooter
                     profit={123}
                 />
+            {showPopup && <ArticleDetails article={articleDetails} handler={closePopup}/>}
         </div>
     )
 }

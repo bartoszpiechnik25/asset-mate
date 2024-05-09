@@ -52,6 +52,10 @@
     margin-right: 1rem;
 }
 
+.asset:hover {
+    background-color: #575d68;
+}
+
 .asset-even {
     display: flex;
     flex-direction: row;
@@ -60,6 +64,10 @@
     justify-content: space-between;
     width: 96%;
     margin-right: 1rem;
+}
+
+.asset-even:hover {
+    background-color: #56595e;
 }
 
 .asset-name {

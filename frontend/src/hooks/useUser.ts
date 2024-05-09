@@ -11,7 +11,6 @@ const setUser = (): User | null => {
     if (!token) {
         return null;
     }
-    console.log(token)
     const parsedToken = JSON.parse(JSON.stringify(jwtDecode(token)));
     return {
         id: parsedToken.id,
@@ -27,4 +26,12 @@ const isValid = (user: User): boolean => {
     return true;
 }
 
-export {isValid, setUser};
+const getToken = (): string|null => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        return token;
+    }
+    return null;
+}
+
+export {isValid, setUser, getToken};
