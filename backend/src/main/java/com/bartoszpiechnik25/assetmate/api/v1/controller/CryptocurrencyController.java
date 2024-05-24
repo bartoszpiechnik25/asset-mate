@@ -141,4 +141,21 @@ public class CryptocurrencyController {
         return ResponseEntity.ok(coin);
     }
 
+    @GetMapping("/available")
+    public ResponseEntity<?> getAvailableCoins() {
+        var availableCoins = coinsLookUp.getCryptoMap();
+        if (availableCoins == null) {
+            var header = new HttpHeaders();
+            header.add("Content-Type", "application/json");
+            return new ResponseEntity<>(
+                    Map.of("message", "cannot fetch available coins"),
+                    header,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+        return ResponseEntity.ok(
+                availableCoins
+        );
+    }
+
 }

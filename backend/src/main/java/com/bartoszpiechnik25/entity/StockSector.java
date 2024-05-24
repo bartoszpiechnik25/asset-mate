@@ -1,9 +1,17 @@
 package com.bartoszpiechnik25.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "stock_sector")
 public class StockSector {
     @Id
@@ -13,21 +21,4 @@ public class StockSector {
 
     @Column(name = "sector_name", nullable = false, length = 64)
     private String sectorName;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getSectorName() {
-        return sectorName;
-    }
-
-    public void setSectorName(String sectorName) {
-        this.sectorName = sectorName;
-    }
-
 }

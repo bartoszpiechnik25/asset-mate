@@ -54,7 +54,7 @@ const InvestmentTypeMenu: React.FC = () => {
 
     return (
         <div className="instrument-type-menu">
-           {(types as any[]).map((type: any) => <InstrumentTypeElement name={type.name}/>)}
+           {(types as any[]).map((type: any) => <InstrumentTypeElement name={type.name} key={type.name}/>)}
         </div>
     )
 }

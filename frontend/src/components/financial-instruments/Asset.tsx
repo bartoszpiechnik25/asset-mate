@@ -6,19 +6,25 @@ interface AssetProps {
     type: string;
     description: string;
     idx: number;
+    clickHandler: (asset: any) => void
 }
 
-const Asset: React.FC<AssetProps> = ({symbol, type, description, idx}) => {
+const Asset: React.FC<AssetProps> = ({symbol, type, description, idx, clickHandler}) => {
     let className = "asset";
     if (idx % 2 !== 0) {
         className = "asset-even"
+    }
+
+    const asset = {
+        symbol: symbol,
+        type: type
     }
     return (
         <div className={className}>
             <p className="asset-name">{symbol}</p>
             <p className="asset-description">{description}</p>
             <p className="asset-type">{type}</p>
-            <div className="info-icon">
+            <div className="info-icon" onClick={() => {clickHandler(asset)}}>
                 <Info/>
             </div>
         </div>

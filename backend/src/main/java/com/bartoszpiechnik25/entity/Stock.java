@@ -1,11 +1,19 @@
 package com.bartoszpiechnik25.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.UUID;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "stock")
 public class Stock {
     @Id
@@ -30,53 +38,4 @@ public class Stock {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sector_id", nullable = false)
     private StockSector sector;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getStockName() {
-        return stockName;
-    }
-
-    public void setStockName(String stockName) {
-        this.stockName = stockName;
-    }
-
-    public String getBusinessSummary() {
-        return businessSummary;
-    }
-
-    public void setBusinessSummary(String businessSummary) {
-        this.businessSummary = businessSummary;
-    }
-
-    public Symbol getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(Symbol symbol) {
-        this.symbol = symbol;
-    }
-
-    public StockIndustry getIndustry() {
-        return industry;
-    }
-
-    public void setIndustry(StockIndustry industry) {
-        this.industry = industry;
-    }
-
-    public StockSector getSector() {
-        return sector;
-    }
-
-    public void setSector(StockSector sector) {
-        this.sector = sector;
-    }
-
 }

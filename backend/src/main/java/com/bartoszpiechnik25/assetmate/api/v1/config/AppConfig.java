@@ -5,6 +5,7 @@ import com.bartoszpiechnik25.assetmate.api.v1.repository.UserRepository;
 import com.bartoszpiechnik25.entity.Cryptocurrency;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -63,7 +64,9 @@ public class AppConfig {
 //    }
     @Bean
     public ModelMapper modelMapper() {
-        return new ModelMapper();
+        var modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper;
     }
 
     @Bean

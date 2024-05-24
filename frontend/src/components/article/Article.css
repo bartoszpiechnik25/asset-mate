@@ -33,12 +33,12 @@
 
 .article-details {
     overflow: hidden;
-    color: black;
+    color: white;
     width: 40%;
     height: 70%;
     margin-left: 27%;
     position: absolute;
-    background-color: rgb(239, 233, 233);
+    background-color: #1c1f23;
     align-items: center;
 }
 
@@ -54,10 +54,14 @@
     text-align: justify;
     word-wrap: break-word;
     margin: 1em;
-    height: inherit;
+    height: 80%;
     overflow-y: auto;
     margin-bottom: 2rem;
-    padding: 10px;
+}
+
+.article-content p {
+    word-wrap: break-word;
+    margin: 0.7em;
 }
 
 .article-details-title {

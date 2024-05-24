@@ -22,6 +22,9 @@ public class Symbol {
     @Column(name = "yahoo_symbol", nullable = false, length = 15)
     private String yahooSymbol;
 
+    @Column(name = "description", nullable = false, length = 100)
+    private String description;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "instrument_type_id", nullable = false)
     private InstrumentType instrumentType;
