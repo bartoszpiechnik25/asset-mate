@@ -1,0 +1,30 @@
+
+.asset-details {
+    overflow: hidden;
+    color: white;
+    width: 40%;
+    height: 70%;
+    margin-left: 27%;
+    position: absolute;
+    background-color: #1c1f23;
+    align-items: center;
+}
+
+.close-icon-wrapper {
+    margin-top: 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: right;
+}
+.asset-details-title {
+    padding: 10px;
+    margin-top: 1rem;
+    font-weight: 650;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.asset-details-description {
+    padding: 0% 5%;
+}
