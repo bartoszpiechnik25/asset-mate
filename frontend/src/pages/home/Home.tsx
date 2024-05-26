@@ -7,11 +7,13 @@ import SummaryFooter from "../../components/summary-footer/SummaryFooter";
 import MenuButtons from "../../components/menu-bar/MenuBar";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../hooks/useUser";
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import Articles from "../../components/article/Articles";
 import ArticleDetails from "../../components/article/ArticleDetails"
 import AssetDetails from "../../components/financial-instruments/asset-details/AssetDetails";
 import Assets from "../../components/financial-instruments/Assets";
+import InvestmentsTable from "../../components/summary/InvestmentsSummary";
+import { InvestmentData, createData, getUserInvestmentsData } from "../../components/summary/investments-util";
 
 
 const Home = () => {
@@ -21,6 +23,24 @@ const Home = () => {
     const [showAssetPopup, setshowAssetPopup] = useState(false);
     const [assetDetails, setAssetDetails] = useState<null|any>(null);
     const [articleDetails, setArticleDetails] = useState(null);
+    const [userInvestments, setUserInvestments] = useState<InvestmentData[]|null>(null);
+
+    useEffect(() => {
+        const fetch = async () => {
+            const response = await getUserInvestmentsData();
+            const result: InvestmentData[] = response.map((data: any) => createData(data.yahooSymbol, data.volume, data.openPrice, data.marketPrice));
+            setUserInvestments(result);
+        }
+        fetch();
+    }, []);
+
+    const investHandler = (newInvestment: InvestmentData) => {
+        const prevInvestments = userInvestments;
+        if (prevInvestments === null) {
+            return
+        }
+        setUserInvestments([...prevInvestments, newInvestment]);
+    }
 
 
     let user = setUser();
@@ -83,9 +103,11 @@ const Home = () => {
                         { tabText: 'History', active: false },
                     ]}
                     paneText="Portfolio"
-                    className="investments-pane"
-                />
-                <SummaryFooter profit={123}/>
+                    className="investments-pane">
+                        <InvestmentsTable userInvestments={userInvestments}/>
+                </PaneWithTab>
+
+                <SummaryFooter investments={userInvestments} investHandler={investHandler}/>
             {showlArticlePopup && <ArticleDetails article={articleDetails} closePopUpHandler={closePopup}/>}
             {showAssetPopup && <AssetDetails asset={assetDetails} closePopUpHandler={closeAssetDetailsPopup}/>}
         </div>
