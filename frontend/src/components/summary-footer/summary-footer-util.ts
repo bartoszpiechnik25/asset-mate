@@ -8,7 +8,7 @@ const calculateProfit = (data: InvestmentData[]): number => {
     for (var investment of data) {
         profit += investment.grossProfit;
     }
-    return profit;
+    return Math.round(profit*100)/100;
 }
 
 export default calculateProfit;

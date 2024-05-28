@@ -1,35 +1,33 @@
 import { useEffect, useState } from "react";
-import getSymbolDetails from "../asset-util"
-import { Close } from "@mui/icons-material";
-import "./AssetDetails.css";
+import getSymbolDetails from "../asset-util";
+import { DetailsProps } from "./AssetDetails";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DetailsItem from "./DetailsItem";
 import PerformanceTable from "./PerformanceTable";
-import { DetailsProps } from "./AssetDetails";
+import { Close } from "@mui/icons-material";
 
 
-const url = "http://localhost:8080/api/v1/etf/";
-const performanceUrl = "http://localhost:8080/api/v1/symbols/performance/";
+const url = "http://localhost:8080/api/v1/stock/";
+const performanceUrl = "http://localhost:8080/api/v1/symbols/performance/"
 
-
-const EtfDetails: React.FC<DetailsProps> = ({symbol, open, closeDialogHandler}) => {
-    const [etf, setEtfDetails] = useState<any|null>(null);
-    const [etfPerformance, setEtfPerformance] = useState<any|null>(null);
+const StockDetails: React.FC<DetailsProps> = ({symbol, open, closeDialogHandler}) => {
+    const [stock, setstockDetails] = useState<any|null>(null);
+    const [stockPerformance, setstockPerformance] = useState<any|null>(null);
 
     useEffect(() => {
         const fetch = async () => {
             const details = await getSymbolDetails(url, symbol);
-            setEtfDetails(details);
+            setstockDetails(details);
             const performance = await getSymbolDetails(performanceUrl, symbol);
-            setEtfPerformance(performance);
+            setstockPerformance(performance);
         }
         fetch();
     }, []);
 
-    if (etf === null || etfPerformance === null) {
+    if (stock === null || stockPerformance === null) {
         return <div></div>
     }
     return (
@@ -41,27 +39,27 @@ const EtfDetails: React.FC<DetailsProps> = ({symbol, open, closeDialogHandler}) 
                 style: {backgroundColor: "#222831", color: "white"}
             }}
         >
-            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}} id="etf-details-title-close-container">
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}} id="stock-details-title-close-container">
                 <DialogTitle style={{fontWeight: 700, fontSize: 22, alignItems: 'center'}}>
-                    {etf.yahooSymbol}
+                    {stock.yahooSymbol}
                 </DialogTitle>
                 <div className="close-icon-wrapper" onClick={closeDialogHandler}>
                     <Close />
                 </div>
             </div>
             <DialogContent>
-                <DialogContentText style={{color: "white"}}>{etf.description}</DialogContentText>
+                <DialogContentText style={{color: "white", fontSize: 15, fontWeight: 500}}>{stock.businessSummary}</DialogContentText>
                 <br />
                 <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                    <DetailsItem title="ISIN" content={etf.isin}/>
-                    <DetailsItem title="Total assets" content={etf.totalAssets}/>
-                    <DetailsItem title="Asset type" content={etf.instrumentTypeName}/>
+                    <DetailsItem title="Stock Name" content={stock.stockName}/>
+                    <DetailsItem title="Sector Name" content={stock.sectorName}/>
+                    <DetailsItem title="Industry Name" content={stock.industryName}/>
+                    <DetailsItem title="Asset type" content={stock.instrumentTypeName}/>
                 </div>
-                <PerformanceTable performance={etfPerformance}/>
-                
+                <PerformanceTable performance={stockPerformance}/>
             </DialogContent>
         </Dialog>
-    );
+    )
 }
 
-export default EtfDetails;
+export default StockDetails;

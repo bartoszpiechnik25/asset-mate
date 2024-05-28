@@ -3,10 +3,11 @@ import "./SummaryFooter.css";
 import Button from "../button/Button";
 import { InvestmentData, createData } from "../summary/investments-util";
 import calculateProfit from "./summary-footer-util";
+import InvestDialog from "../invest/InvestDialog";
 
 interface ISummary {
     investments: InvestmentData[] | null;
-    investHandler: (data: any) => void;
+    investHandler: (data: InvestmentData) => void;
 }
 
 const getProfitFontColor = (profit: number) => {
@@ -41,13 +42,7 @@ const SummaryFooter: React.FC<ISummary> = ({investments, investHandler}) => {
     
     return (
         <div className="summary-footer">
-            <Button
-                onClick={()=>{
-                    investHandler(createData("IWDA.UK", 20, 81.90, 97.80));
-                }}
-                text="Invest"
-                rounded={false}
-            />
+            <InvestDialog addRecordToUserInvestments={investHandler}/>
             <div className="summary-text">
                 <p>Profit</p>
                 <p style={{color: getProfitFontColor(profit)}}>{profit}</p>

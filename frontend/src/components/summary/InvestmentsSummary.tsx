@@ -68,9 +68,9 @@ const InvestmentsTable = ({userInvestments}: {userInvestments: InvestmentData[]|
             </StyledTableRow>
             </TableHead>
             <TableBody>
-            {userInvestments.map((row) => (
+            {userInvestments.map((row, index) => (
                 <StyledTableRow
-                    key={row.symbol}
+                    key={row.symbol + index}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                     <StyledTableCell component="th" scope="row" sx={{fontWeight: 600}}>

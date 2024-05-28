@@ -1,5 +1,6 @@
 package com.bartoszpiechnik25.assetmate.api.v1.controller;
 
+import com.bartoszpiechnik25.assetmate.api.v1.dto.request.InvestRequest;
 import com.bartoszpiechnik25.assetmate.api.v1.dto.response.UserInvestmentsDto;
 import com.bartoszpiechnik25.assetmate.api.v1.service.InvestmentsService;
 import com.bartoszpiechnik25.entity.Investment;
@@ -27,8 +28,20 @@ public class InvestmentsController {
         return null;
     }
     @PostMapping
-    ResponseEntity<Investment> createInvestment(@RequestBody Investment investment) {
-        return null;
+    ResponseEntity<?> createInvestment(@RequestBody InvestRequest investment) {
+        var result = investmentsService.createUserInvestment(investment);
+        if (result == null) {
+            HttpHeaders header = new HttpHeaders();
+            header.add("Content-Type", "application/json");
+            return new ResponseEntity<>(
+                    Map.of("message", "could not create an investment with given data"),
+                    header,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+        return ResponseEntity.ok(
+                mapper.map(result, UserInvestmentsDto.class)
+        );
     }
 
 

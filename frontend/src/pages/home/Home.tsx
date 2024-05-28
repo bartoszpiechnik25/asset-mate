@@ -109,7 +109,7 @@ const Home = () => {
 
                 <SummaryFooter investments={userInvestments} investHandler={investHandler}/>
             {showlArticlePopup && <ArticleDetails article={articleDetails} closePopUpHandler={closePopup}/>}
-            {showAssetPopup && <AssetDetails asset={assetDetails} closePopUpHandler={closeAssetDetailsPopup}/>}
+            <AssetDetails asset={assetDetails} closePopUpHandler={closeAssetDetailsPopup} open={showAssetPopup}/>
         </div>
     )
 }
