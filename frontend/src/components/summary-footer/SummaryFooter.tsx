@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./SummaryFooter.css";
 import Button from "../button/Button";
-import { InvestmentData, createData } from "../summary/investments-util";
-import calculateProfit from "./summary-footer-util";
+import { InvestmentData } from "../summary/investments-util";
+import { calculateProfit, calculateInvestmentHistoryProfit} from "./summary-footer-util";
 import InvestDialog from "../invest/InvestDialog";
+import { InvestmentHistoryData } from "../history/history-util";
 
 interface ISummary {
     investments: InvestmentData[] | null;
+    investmentsHistory: InvestmentHistoryData[]|null;
+    activeTab: number;
     investHandler: (data: InvestmentData) => void;
 }
 
@@ -20,9 +23,9 @@ const getProfitFontColor = (profit: number) => {
     }
 }
 
-const SummaryFooter: React.FC<ISummary> = ({investments, investHandler}) => {
+const SummaryFooter: React.FC<ISummary> = ({investments, investmentsHistory, activeTab, investHandler}) => {
     
-    if (investments === null) {
+    if (investments === null || investmentsHistory === null) {
         return (
             <div className="summary-footer">
                 <Button
@@ -37,8 +40,12 @@ const SummaryFooter: React.FC<ISummary> = ({investments, investHandler}) => {
             </div>
         )
     }
-
-    const profit = calculateProfit(investments);
+    var profit = 0;
+    if (activeTab === 0) {
+        profit = calculateProfit(investments);
+    } else if (activeTab === 1) {
+        profit = calculateInvestmentHistoryProfit(investmentsHistory);
+    }
     
     return (
         <div className="summary-footer">

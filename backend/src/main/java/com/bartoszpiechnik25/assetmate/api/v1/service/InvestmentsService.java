@@ -1,11 +1,9 @@
 package com.bartoszpiechnik25.assetmate.api.v1.service;
 
 import com.bartoszpiechnik25.assetmate.api.v1.dto.request.InvestRequest;
-import com.bartoszpiechnik25.assetmate.api.v1.repository.CurrencyRepository;
-import com.bartoszpiechnik25.assetmate.api.v1.repository.InvestmentsRepository;
-import com.bartoszpiechnik25.assetmate.api.v1.repository.SymbolRepository;
-import com.bartoszpiechnik25.assetmate.api.v1.repository.UserRepository;
+import com.bartoszpiechnik25.assetmate.api.v1.repository.*;
 import com.bartoszpiechnik25.entity.Investment;
+import com.bartoszpiechnik25.entity.InvestmentHistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +20,7 @@ public class InvestmentsService {
     private final SymbolRepository symbolRepository;
     private final UserRepository userRepository;
     private final CurrencyRepository currencyRepository;
+    private final InvestmentsHistoryRepository investmentsHistoryRepository;
 
     public List<Investment> getUserInvestments(UUID user_id) {
         return investmentsRepository.getInvestmentByUserId(user_id).orElse(null);
@@ -29,6 +28,10 @@ public class InvestmentsService {
 
     public List<Investment> getUserInvestments(String username) {
         return investmentsRepository.getInvestmentByUserUsername(username).orElse(null);
+    }
+
+    public List<InvestmentHistory> getUserHistory(String username) {
+        return investmentsHistoryRepository.getInvestmentHistoriesByUserUsername(username).orElse(null);
     }
 
     public Investment createUserInvestment(InvestRequest investRequest) {

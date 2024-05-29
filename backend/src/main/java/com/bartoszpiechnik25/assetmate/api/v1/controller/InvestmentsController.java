@@ -1,6 +1,7 @@
 package com.bartoszpiechnik25.assetmate.api.v1.controller;
 
 import com.bartoszpiechnik25.assetmate.api.v1.dto.request.InvestRequest;
+import com.bartoszpiechnik25.assetmate.api.v1.dto.response.InvestmentHistoryDto;
 import com.bartoszpiechnik25.assetmate.api.v1.dto.response.UserInvestmentsDto;
 import com.bartoszpiechnik25.assetmate.api.v1.service.InvestmentsService;
 import com.bartoszpiechnik25.entity.Investment;
@@ -27,6 +28,7 @@ public class InvestmentsController {
     ResponseEntity<List<Investment>> getInvestments(@RequestParam(required = false) Map<String, String> params) {
         return null;
     }
+
     @PostMapping
     ResponseEntity<?> createInvestment(@RequestBody InvestRequest investment) {
         var result = investmentsService.createUserInvestment(investment);
@@ -44,7 +46,6 @@ public class InvestmentsController {
         );
     }
 
-
     @GetMapping("/{username}")
     ResponseEntity<?> getUserInvestments(@PathVariable String username) {
         var userInvestments = investmentsService.getUserInvestments(username);
@@ -61,6 +62,24 @@ public class InvestmentsController {
                 mapper.map(userInvestments, UserInvestmentsDto[].class)
         );
     }
+
+    @GetMapping("/{username}/history")
+    ResponseEntity<?> getUserInvestmentsHistory(@PathVariable String username) {
+        var history = investmentsService.getUserHistory(username);
+        if (history == null) {
+            HttpHeaders header = new HttpHeaders();
+            header.add("Content-Type", "application/json");
+            return new ResponseEntity<>(
+                    Map.of("message", "could not fetch user history"),
+                    header,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+        return ResponseEntity.ok(
+                mapper.map(history, InvestmentHistoryDto[].class)
+        );
+    }
+
     @PostMapping("/{investment_id}/close")
     ResponseEntity<InvestmentHistory> closeInvestment(@PathVariable("investment_id") UUID investment_id) {
         return null;

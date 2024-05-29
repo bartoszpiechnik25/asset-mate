@@ -12,8 +12,9 @@ import Articles from "../../components/article/Articles";
 import ArticleDetails from "../../components/article/ArticleDetails"
 import AssetDetails from "../../components/financial-instruments/asset-details/AssetDetails";
 import Assets from "../../components/financial-instruments/Assets";
-import InvestmentsTable from "../../components/summary/InvestmentsSummary";
 import { InvestmentData, createData, getUserInvestmentsData } from "../../components/summary/investments-util";
+import { ExampleTab } from "../../components/tab/Tab";
+import { InvestmentHistoryData, createInvestmentsHistoryData, getUserInvestmentsHistoryData } from "../../components/history/history-util";
 
 
 const Home = () => {
@@ -24,12 +25,20 @@ const Home = () => {
     const [assetDetails, setAssetDetails] = useState<null|any>(null);
     const [articleDetails, setArticleDetails] = useState(null);
     const [userInvestments, setUserInvestments] = useState<InvestmentData[]|null>(null);
+    const [userInvestmentsHistory, setUserInvestmentsHistory] = useState<InvestmentHistoryData[]|null>(null);
+    const [activeTab, setActiveTab] = useState(0);
+
 
     useEffect(() => {
         const fetch = async () => {
             const response = await getUserInvestmentsData();
             const result: InvestmentData[] = response.map((data: any) => createData(data.yahooSymbol, data.volume, data.openPrice, data.marketPrice));
             setUserInvestments(result);
+            const investmentsHistoryResponse = await getUserInvestmentsHistoryData();
+            const history = investmentsHistoryResponse.map(
+                (data: any) => createInvestmentsHistoryData(data.yahooSymbol, data.volume, data.openPrice, data.closePrice)
+            );
+            setUserInvestmentsHistory(history);
         }
         fetch();
     }, []);
@@ -41,7 +50,6 @@ const Home = () => {
         }
         setUserInvestments([...prevInvestments, newInvestment]);
     }
-
 
     let user = setUser();
 
@@ -60,6 +68,10 @@ const Home = () => {
         setAssetDetails(asset);
         console.log(asset)
         setshowAssetPopup(true);
+    }
+
+    const handleTabChange = (tab: number) => {
+        setActiveTab(tab);
     }
 
     const closePopup = () => {
@@ -87,27 +99,22 @@ const Home = () => {
                         <Assets clickHandler={handleAssetInfoClick}/>
                 </PaneWithTab>
                 <PaneWithTab
-                    tabs={[
-                        { tabText: 'News', active: true },
-                        // { tabText: 'History', active: false },
-                    ]}
+                    tabs={[{ tabText: 'News', active: true }]}
                     paneText="News"
                     className="news-pane">
                         <SearchBar placeholder="Find articles eg. s&p performance" />
                         <Articles popUpTrigger={handleArticleClick}/>
                 </PaneWithTab>
             </div>
-                <PaneWithTab
-                    tabs={[
-                        { tabText: 'Your investments', active: true },
-                        { tabText: 'History', active: false },
-                    ]}
-                    paneText="Portfolio"
-                    className="investments-pane">
-                        <InvestmentsTable userInvestments={userInvestments}/>
-                </PaneWithTab>
-
-                <SummaryFooter investments={userInvestments} investHandler={investHandler}/>
+                <ExampleTab 
+                    userInvestments={userInvestments}
+                    userInvestmentsHistory={userInvestmentsHistory}
+                    changeActiveTab={handleTabChange}/>
+                <SummaryFooter
+                    investments={userInvestments}
+                    investmentsHistory={userInvestmentsHistory}
+                    investHandler={investHandler}
+                    activeTab={activeTab}/>
             {showlArticlePopup && <ArticleDetails article={articleDetails} closePopUpHandler={closePopup}/>}
             <AssetDetails asset={assetDetails} closePopUpHandler={closeAssetDetailsPopup} open={showAssetPopup}/>
         </div>

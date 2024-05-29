@@ -180,7 +180,6 @@ const InvestDialog = ({addRecordToUserInvestments}: {addRecordToUserInvestments:
                                     result.openPrice,
                                     result.marketPrice
                                 );
-                                console.log(newInvestment);
                                 addRecordToUserInvestments(newInvestment);
                                 handleClose();
                             }

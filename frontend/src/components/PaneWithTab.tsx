@@ -1,5 +1,5 @@
 import React from "react";
-import { TabProps, Tab } from "./tab/Tab";
+import { TabProps, TabS } from "./tab/Tab";
 import Pane, { IPane } from "./panes/PaneInterface";
 
 
@@ -13,7 +13,7 @@ const PaneWithTab: React.FC<PaneWithTabProps> = ({tabs, paneText, className, chi
     return (
         <div className="pane-tab">
             <div className="tab-container">
-                {tabs.map((tabProps, index) => <Tab key={index} tabText={tabProps.tabText} active={tabProps.active} />)}
+                {tabs.map((tabProps, index) => <TabS key={index} tabText={tabProps.tabText} active={tabProps.active} />)}
             </div>
             <Pane className={className} paneText={paneText}>
                 {children}

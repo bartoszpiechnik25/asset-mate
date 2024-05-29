@@ -6,10 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Close } from '@mui/icons-material';
-import "./InvestmentsSummary.css";
-import { InvestmentData } from './investments-util';
-import { useEffect, useState } from 'react';
+import { InvestmentHistoryData } from './history-util';
 
 const grossProfitColor = (value: number) => {
     if (value > 0) {
@@ -21,7 +18,7 @@ const grossProfitColor = (value: number) => {
     }
 }
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(({ }) => ({
     [`&.${tableCellClasses.head}`]: {
       color: '#979797',
       fontSize: 16,
@@ -46,10 +43,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
   }));
 
-const InvestmentsTable = ({userInvestments}: {userInvestments: InvestmentData[]|null}) => {
+const InvestmentsHistory = ({userInvestmentsHistory}: {userInvestmentsHistory: InvestmentHistoryData[]|null}) => {
 
-    if (userInvestments === null) {
-        return (<div>Something went wrong</div>)
+    if (userInvestmentsHistory === null) {
+        return (<div></div>)
     }
 
     return (
@@ -61,14 +58,13 @@ const InvestmentsTable = ({userInvestments}: {userInvestments: InvestmentData[]|
                 <StyledTableCell align="right">Volume</StyledTableCell>
                 <StyledTableCell align="right">Open Price</StyledTableCell>
                 <StyledTableCell align="right">Market Price</StyledTableCell>
-                <StyledTableCell align="right">Gross Profit</StyledTableCell>
-                <StyledTableCell align="right">Gross Profit %</StyledTableCell>
-                <StyledTableCell align="right">Close</StyledTableCell>
+                <StyledTableCell align="right">Profit</StyledTableCell>
+                <StyledTableCell align="right">Profit %</StyledTableCell>
 
             </StyledTableRow>
             </TableHead>
             <TableBody>
-            {userInvestments.map((row, index) => (
+            {userInvestmentsHistory.map((row, index) => (
                 <StyledTableRow
                     key={row.symbol + index}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -79,14 +75,13 @@ const InvestmentsTable = ({userInvestments}: {userInvestments: InvestmentData[]|
                     </StyledTableCell>
                     <StyledTableCell align="right">{row.volume}</StyledTableCell>
                     <StyledTableCell align="right">{row.openPrice}</StyledTableCell>
-                    <StyledTableCell align="right">{row.marketPrice}</StyledTableCell>
-                    <StyledTableCell align="right" style={{color: grossProfitColor(row.grossProfit)}}>
-                        {row.grossProfit}
+                    <StyledTableCell align="right">{row.closePrice}</StyledTableCell>
+                    <StyledTableCell align="right" style={{color: grossProfitColor(row.profit)}}>
+                        {row.profit}
                     </StyledTableCell>
-                    <StyledTableCell align="right" style={{color: grossProfitColor(row.grossProfit)}}>
-                        {row.grossProfitPercent}
+                    <StyledTableCell align="right" style={{color: grossProfitColor(row.profit)}}>
+                        {row.profitPercent}
                     </StyledTableCell>
-                    <StyledTableCell align="right"><Close color='error' sx={{cursor: 'pointer'}}/></StyledTableCell>
                 </StyledTableRow>
             ))}
             </TableBody>
@@ -95,4 +90,4 @@ const InvestmentsTable = ({userInvestments}: {userInvestments: InvestmentData[]|
     );
 }
 
-export default InvestmentsTable;
+export default InvestmentsHistory;

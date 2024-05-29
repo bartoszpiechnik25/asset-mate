@@ -3,7 +3,7 @@ import { getToken, setUser } from "../../hooks/useUser";
 
 const url = "http://localhost:8080/api/v1/investments/"
 
-const getUserInvestmentsData = async () => {
+const getUserInvestmentsHistoryData = async () => {
     const token = getToken();
     if (token === null) {
         return null;
@@ -11,7 +11,7 @@ const getUserInvestmentsData = async () => {
     const user = setUser();
     try {
         const response = await axios.get(
-            url + user?.username,
+            url + user?.username + "/history",
             {
                 headers: {
                     Authorization: "Bearer " + token
@@ -19,7 +19,6 @@ const getUserInvestmentsData = async () => {
             }
         );
         if (response.status === 200) {
-            console.log(response.data)
             return response.data
         }
 
@@ -29,28 +28,28 @@ const getUserInvestmentsData = async () => {
     return null;
 }
 
-type InvestmentData = {
+type InvestmentHistoryData = {
     symbol: string;
     volume: number;
     openPrice: number;
-    marketPrice: number;
-    grossProfit: number;
-    grossProfitPercent: number;
+    closePrice: number;
+    profit: number;
+    profitPercent: number;
   };
   
 
-const createData = (
+const createInvestmentsHistoryData = (
     symbol: string,
     volume: number,
     openPrice: number,
-    marketPrice: number,
-): InvestmentData => {
-    const grossProfit = Math.round(((marketPrice * volume) - (openPrice * volume)) * 100) / 100;
-    const grossProfitPercent = Math.round(((marketPrice - openPrice) / openPrice)*100*100) / 100
-    return {symbol, volume, openPrice, marketPrice,  grossProfit, grossProfitPercent};
+    closePrice: number,
+): InvestmentHistoryData => {
+    const profit = Math.round((volume * (closePrice - openPrice)) * 100) / 100;
+    const profitPercent = Math.round(((closePrice - openPrice) / openPrice)* 100 * 100) / 100;
+    return {symbol, volume, openPrice, closePrice, profit, profitPercent};
 }
   
 
 
-export {getUserInvestmentsData, createData};
-export type {InvestmentData};
+export {getUserInvestmentsHistoryData, createInvestmentsHistoryData};
+export type {InvestmentHistoryData};
