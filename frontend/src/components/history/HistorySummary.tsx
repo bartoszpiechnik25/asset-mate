@@ -5,7 +5,6 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { InvestmentHistoryData } from './history-util';
 
 const grossProfitColor = (value: number) => {
@@ -22,6 +21,8 @@ const StyledTableCell = styled(TableCell)(({ }) => ({
     [`&.${tableCellClasses.head}`]: {
       color: '#979797',
       fontSize: 16,
+      backgroundColor: '#222831'
+
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 13,
@@ -50,8 +51,8 @@ const InvestmentsHistory = ({userInvestmentsHistory}: {userInvestmentsHistory: I
     }
 
     return (
-        <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 'fit-content', backgroundColor:  '#222831', color: 'green'}} aria-label="simple table" >
+        <TableContainer style={{ maxHeight: "33vh" }}>
+        <Table stickyHeader sx={{ minWidth: 'fit-content', backgroundColor:  '#222831', color: 'green'}} aria-label="simple table" >
             <TableHead>
             <StyledTableRow>
                 <StyledTableCell>Asset Symbol</StyledTableCell>
@@ -60,10 +61,9 @@ const InvestmentsHistory = ({userInvestmentsHistory}: {userInvestmentsHistory: I
                 <StyledTableCell align="right">Market Price</StyledTableCell>
                 <StyledTableCell align="right">Profit</StyledTableCell>
                 <StyledTableCell align="right">Profit %</StyledTableCell>
-
             </StyledTableRow>
             </TableHead>
-            <TableBody>
+            <TableBody style={{overflowY: "auto"}}>
             {userInvestmentsHistory.map((row, index) => (
                 <StyledTableRow
                     key={row.symbol + index}

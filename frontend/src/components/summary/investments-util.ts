@@ -19,7 +19,6 @@ const getUserInvestmentsData = async () => {
             }
         );
         if (response.status === 200) {
-            console.log(response.data)
             return response.data
         }
 

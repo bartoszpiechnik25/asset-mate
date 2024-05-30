@@ -20,9 +20,9 @@ import AddInstrument from "../../components/admin/AddInstrument";
 const Home = () => {
     document.body.style.backgroundColor = "black";
     const navigate = useNavigate();
-    const [showlArticlePopup, setshowlArticlePopup] = useState(false);
+    const [showlArticlePopup, setshowlArticlePopup] = useState<boolean>(false);
     const [showAssetPopup, setshowAssetPopup] = useState(false);
-    const [assetDetails, setAssetDetails] = useState<null|any>(null);
+    const [assetDetails, setAssetDetails] = useState<any>(null);
     const [addInstrument, setAddInstrument] = useState<boolean>(false);
     const [articleDetails, setArticleDetails] = useState(null);
     const [userInvestments, setUserInvestments] = useState<InvestmentData[]>([]);
@@ -90,7 +90,6 @@ const Home = () => {
 
     const handleAssetInfoClick = (asset: any) => {
         setAssetDetails(asset);
-        console.log(asset)
         setshowAssetPopup(true);
     }
 
@@ -129,7 +128,6 @@ const Home = () => {
                     tabs={[{ tabText: 'News', active: true }]}
                     paneText="News"
                     className="news-pane">
-                        <SearchBar placeholder="Find articles eg. s&p performance" />
                         <Articles popUpTrigger={handleArticleClick}/>
                 </PaneWithTab>
             </div>
@@ -143,7 +141,7 @@ const Home = () => {
                     investmentsHistory={userInvestmentsHistory}
                     investHandler={investHandler}
                     activeTab={activeTab}/>
-            {showlArticlePopup && <ArticleDetails article={articleDetails} closePopUpHandler={closePopup}/>}
+            <ArticleDetails open={showlArticlePopup} handleClose={closePopup} article={articleDetails}/>
             <AssetDetails asset={assetDetails} closePopUpHandler={closeAssetDetailsPopup} open={showAssetPopup}/>
             <AddInstrument
                 open={addInstrument}

@@ -32,6 +32,9 @@ const getArticleText = async (article: any): Promise<any | null> => {
     if (token === null) {
         return null;
     }
+    if (article === null) {
+        return null;
+    }
     try {
         const response = await axios.get(
             get_text_url + article.url,

@@ -26,11 +26,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       color: '#979797',
       fontSize: 16,
+      backgroundColor: '#222831'
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 13,
       color: 'white',
-    //   borderColor: '#979797'
     },
   }));
 
@@ -62,8 +62,8 @@ const InvestmentsTable: React.FC<InvestmentsTableProps> = ({userInvestments, upd
     }
 
     return (
-        <TableContainer>
-            <Table sx={{ minWidth: 'fit-content', backgroundColor:  '#222831'}} aria-label="sticky table" >
+        <TableContainer style={{ maxHeight: "33vh" }}>
+            <Table stickyHeader sx={{ minWidth: 'fit-content'}} aria-label="sticky table" >
                 <TableHead>
                     <StyledTableRow>
                         <StyledTableCell>Asset Symbol</StyledTableCell>
@@ -75,7 +75,7 @@ const InvestmentsTable: React.FC<InvestmentsTableProps> = ({userInvestments, upd
                         <StyledTableCell align="right">Close</StyledTableCell>
                     </StyledTableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody style={{overflowY: "auto"}}>
                 {userInvestments.map((row, index) => (
                     <StyledTableRow
                         key={row.symbol + index}

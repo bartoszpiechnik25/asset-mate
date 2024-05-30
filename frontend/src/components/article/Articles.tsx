@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {getArticles} from "./article-util";
 import { Article } from "./Article";
+import SearchBar from "../search-bar/SearchBar";
 
 type ArticlesProps = {
     popUpTrigger: (article: any) => void;
@@ -20,22 +21,28 @@ const Articles: React.FC<ArticlesProps> = ({popUpTrigger} ) => {
 
     if (articles === null) {
         return (
-            <div className="articles">
-                Loading articles...
+            <div>
+                <SearchBar setArticles={setArticles}/>
+                <div className="articles">
+                    Loading articles...
+                </div>
             </div>
         )
     }
     return (
-        <div className="articles">
-            {articles.map((article: any, index: number) => 
-                <Article 
-                    key={index}
-                    title={article.title}
-                    summary={article.description}
-                    url={article.url}
-                    onClick={popUpTrigger}
-                />)
-            }
+        <div>
+            <SearchBar setArticles={setArticles}/>
+            <div className="articles" style={{overflowY: "auto", height: "32vh"}}>
+                {articles.map((article: any, index: number) => 
+                    <Article 
+                        key={index}
+                        title={article.title}
+                        summary={article.description}
+                        url={article.url}
+                        onClick={popUpTrigger}
+                    />)
+                }
+            </div>
         </div>
     )
 }
