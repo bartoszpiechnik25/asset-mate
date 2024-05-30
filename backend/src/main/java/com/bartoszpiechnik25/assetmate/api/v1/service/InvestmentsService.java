@@ -57,4 +57,18 @@ public class InvestmentsService {
         newInvestment.setAcquiredAt(OffsetDateTime.now());
         return investmentsRepository.save(newInvestment);
     }
+
+    public InvestmentHistory closeInvestment(UUID investment_id) {
+        System.out.println("siema");
+        InvestmentHistory investmentHistory = new InvestmentHistory();
+        var investment = investmentsRepository.findById(investment_id).orElse(null);
+        if (investment == null) {
+            return null;
+        }
+        investmentHistory.setInvestment(investment);
+        investmentHistory.setUser(investment.getUser());
+        investmentHistory.setClosedAt(OffsetDateTime.now());
+        investmentHistory.setClosePrice(investment.getMarketPrice());
+        return investmentsHistoryRepository.save(investmentHistory);
+    }
 }

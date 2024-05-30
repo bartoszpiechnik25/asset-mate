@@ -90,7 +90,7 @@ public class CryptocurrencyController {
             HttpHeaders header = new HttpHeaders();
             header.add("Content-Type", "application/json; charset=utf-8");
             return new ResponseEntity<>(
-                    Map.of("message", "could not found cryptocurrency with given id"),
+                    Map.of("message", "could not find cryptocurrency with given id"),
                     header,
                     HttpStatus.NOT_FOUND
             );

@@ -4,6 +4,7 @@ export interface User {
   id: string;
   username: string;
   exp: number;
+  role: string;
 }
 
 const setUser = (): User | null => {
@@ -15,7 +16,8 @@ const setUser = (): User | null => {
     return {
         id: parsedToken.id,
         username: parsedToken.sub,
-        exp: Number(parsedToken.exp)
+        exp: Number(parsedToken.exp),
+        role: parsedToken.role
     }
 }
 

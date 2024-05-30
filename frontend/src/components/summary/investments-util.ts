@@ -14,7 +14,36 @@ const getUserInvestmentsData = async () => {
             url + user?.username,
             {
                 headers: {
-                    Authorization: "Bearer " + token
+                    Authorization: "Bearer " + token,
+                }
+            }
+        );
+        if (response.status === 200) {
+            console.log(response.data)
+            return response.data
+        }
+
+    } catch (error) {
+        return null;
+    }
+    return null;
+}
+
+const closeInvestment = async (id: string) => {
+    const closeUrl = url + id + "/close";
+    console.log(closeUrl)
+    const token = getToken();
+    if (token === null) {
+        return null;
+    }
+    try {
+        const response = await axios.post(
+            closeUrl,
+            {},
+            {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json"
                 }
             }
         );
@@ -30,16 +59,18 @@ const getUserInvestmentsData = async () => {
 }
 
 type InvestmentData = {
+    id: string;
     symbol: string;
     volume: number;
     openPrice: number;
     marketPrice: number;
     grossProfit: number;
     grossProfitPercent: number;
-  };
+};
   
 
 const createData = (
+    id: string,
     symbol: string,
     volume: number,
     openPrice: number,
@@ -47,10 +78,9 @@ const createData = (
 ): InvestmentData => {
     const grossProfit = Math.round(((marketPrice * volume) - (openPrice * volume)) * 100) / 100;
     const grossProfitPercent = Math.round(((marketPrice - openPrice) / openPrice)*100*100) / 100
-    return {symbol, volume, openPrice, marketPrice,  grossProfit, grossProfitPercent};
+    return {id, symbol, volume, openPrice, marketPrice,  grossProfit, grossProfitPercent};
 }
-  
 
 
-export {getUserInvestmentsData, createData};
+export {getUserInvestmentsData, createData, closeInvestment};
 export type {InvestmentData};

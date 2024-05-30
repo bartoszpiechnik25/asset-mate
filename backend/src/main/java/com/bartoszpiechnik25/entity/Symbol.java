@@ -22,7 +22,7 @@ public class Symbol {
     @Column(name = "yahoo_symbol", nullable = false, length = 15)
     private String yahooSymbol;
 
-    @Column(name = "description", nullable = false, length = 100)
+    @Column(name = "description", nullable = false, length = 255)
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

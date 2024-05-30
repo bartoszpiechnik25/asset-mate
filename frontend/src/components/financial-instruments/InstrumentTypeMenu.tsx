@@ -59,3 +59,5 @@ const InvestmentTypeMenu: React.FC = () => {
 }
 
 export default InvestmentTypeMenu;
+
+export { getInstrumentTypes };

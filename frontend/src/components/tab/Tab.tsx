@@ -24,12 +24,13 @@ const TabS: React.FC<TabProps> = ({tabText, active = true}) => {
 }
 
 interface InvestmentsHistoryTabsProps {
-    userInvestments: InvestmentData[]|null;
-    userInvestmentsHistory: InvestmentHistoryData[]|null;
+    userInvestments: InvestmentData[];
+    userInvestmentsHistory: InvestmentHistoryData[];
+    updateInvestments: (data: InvestmentData[]) => void;
     changeActiveTab: (tab: number) => void;
 }
 
-const ExampleTab: React.FC<InvestmentsHistoryTabsProps> = ({userInvestments, userInvestmentsHistory, changeActiveTab}) => {
+const ExampleTab: React.FC<InvestmentsHistoryTabsProps> = ({userInvestments, userInvestmentsHistory, changeActiveTab, updateInvestments}) => {
     const [value, setValue] = useState(0);
 
     const handleChange = (event: any, newValue: number) => {
@@ -44,7 +45,9 @@ const ExampleTab: React.FC<InvestmentsHistoryTabsProps> = ({userInvestments, use
           </Tabs>
           <div className="investments-pane">
             <Box>
-                {value === 0 && <InvestmentsTable userInvestments={userInvestments}/>}
+                {value === 0 && <InvestmentsTable
+                                        userInvestments={userInvestments}
+                                        updateInvestments={updateInvestments}/>}
                 {value === 1 && <InvestmentsHistory userInvestmentsHistory={userInvestmentsHistory}/>}
             </Box>
           </div>

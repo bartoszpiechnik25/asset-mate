@@ -51,7 +51,7 @@ public class AuthService {
                         request.getPassword()
                 )
         );
-        String jwt = jwtService.generateToken(Map.of("id", user.getId()), user);
+        String jwt = jwtService.generateToken(Map.of("id", user.getId(), "role", user.getRole()), user);
         return AuthenticationResponse.builder()
                 .token(jwt)
                 .build();

@@ -81,8 +81,21 @@ public class InvestmentsController {
     }
 
     @PostMapping("/{investment_id}/close")
-    ResponseEntity<InvestmentHistory> closeInvestment(@PathVariable("investment_id") UUID investment_id) {
-        return null;
+    ResponseEntity<?> closeInvestment(@PathVariable("investment_id") String investment_id) {
+        var id = UUID.fromString(investment_id);
+        var investmentHistory = investmentsService.closeInvestment(id);
+        if (investmentHistory == null) {
+            HttpHeaders header = new HttpHeaders();
+            header.add("Content-Type", "application/json");
+            return new ResponseEntity<>(
+                    Map.of("message", "could not close investment with id: " + investment_id),
+                    header,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+        return ResponseEntity.ok(
+                mapper.map(investmentHistory, InvestmentHistoryDto.class)
+        );
     }
 
 }

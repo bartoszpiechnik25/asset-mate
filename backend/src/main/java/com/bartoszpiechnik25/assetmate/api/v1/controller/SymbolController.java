@@ -1,6 +1,7 @@
 package com.bartoszpiechnik25.assetmate.api.v1.controller;
 
 
+import com.bartoszpiechnik25.assetmate.api.v1.dto.request.AddSymbolRequest;
 import com.bartoszpiechnik25.assetmate.api.v1.dto.response.SymbolPerformanceDto;
 import com.bartoszpiechnik25.assetmate.api.v1.dto.response.SymbolResponseDto;
 import com.bartoszpiechnik25.assetmate.api.v1.service.SymbolService;
@@ -10,10 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -59,5 +57,30 @@ public class SymbolController {
         );
     }
 
+    @PostMapping()
+    public ResponseEntity<?> addNewSymbol(@RequestBody AddSymbolRequest symbolRequest) {
+        if (symbolRequest.getYahooSymbol().isEmpty() || symbolRequest.getDescription().isEmpty() || symbolRequest.getInstrumentType().isEmpty()) {
+            HttpHeaders header = new HttpHeaders();
+            header.add("Content-Type", "application/json");
+            return new ResponseEntity<>(
+                    Map.of("message", "incomplete data"),
+                    header,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+        var symbol = symbolService.addNewSymbol(symbolRequest);
+        if (symbol == null) {
+            HttpHeaders header = new HttpHeaders();
+            header.add("Content-Type", "application/json");
+            return new ResponseEntity<>(
+                    Map.of("message", "could not add new symbol"),
+                    header,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+        return ResponseEntity.ok(
+                mapper.map(symbol, SymbolResponseDto.class)
+        );
+    }
 
 }

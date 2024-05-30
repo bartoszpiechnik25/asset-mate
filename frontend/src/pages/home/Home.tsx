@@ -1,8 +1,7 @@
 import PaneWithTab from "../../components/PaneWithTab";
 import SearchBar from "../../components/search-bar/SearchBar";
-import InstrumentTypeMenu from "../../components/financial-instruments/InstrumentTypeMenu";
+import InstrumentTypeMenu, { getInstrumentTypes } from "../../components/financial-instruments/InstrumentTypeMenu";
 import "./Home.css";
-import { AssetColumns } from "../../components/financial-instruments/Asset";
 import SummaryFooter from "../../components/summary-footer/SummaryFooter";
 import MenuButtons from "../../components/menu-bar/MenuBar";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +10,11 @@ import {  useEffect, useState } from "react";
 import Articles from "../../components/article/Articles";
 import ArticleDetails from "../../components/article/ArticleDetails"
 import AssetDetails from "../../components/financial-instruments/asset-details/AssetDetails";
-import Assets from "../../components/financial-instruments/Assets";
+import Assets, { Asset } from "../../components/financial-instruments/Assets";
 import { InvestmentData, createData, getUserInvestmentsData } from "../../components/summary/investments-util";
 import { ExampleTab } from "../../components/tab/Tab";
 import { InvestmentHistoryData, createInvestmentsHistoryData, getUserInvestmentsHistoryData } from "../../components/history/history-util";
+import AddInstrument from "../../components/admin/AddInstrument";
 
 
 const Home = () => {
@@ -23,22 +23,30 @@ const Home = () => {
     const [showlArticlePopup, setshowlArticlePopup] = useState(false);
     const [showAssetPopup, setshowAssetPopup] = useState(false);
     const [assetDetails, setAssetDetails] = useState<null|any>(null);
+    const [addInstrument, setAddInstrument] = useState<boolean>(false);
     const [articleDetails, setArticleDetails] = useState(null);
-    const [userInvestments, setUserInvestments] = useState<InvestmentData[]|null>(null);
-    const [userInvestmentsHistory, setUserInvestmentsHistory] = useState<InvestmentHistoryData[]|null>(null);
+    const [userInvestments, setUserInvestments] = useState<InvestmentData[]>([]);
+    const [userInvestmentsHistory, setUserInvestmentsHistory] = useState<InvestmentHistoryData[]>([]);
     const [activeTab, setActiveTab] = useState(0);
+    const [instrumentTypes, setInstrumentTypes] = useState([]);
+    const [assets, setAssets] = useState<Asset[]>([]);
 
 
     useEffect(() => {
         const fetch = async () => {
             const response = await getUserInvestmentsData();
-            const result: InvestmentData[] = response.map((data: any) => createData(data.yahooSymbol, data.volume, data.openPrice, data.marketPrice));
+            const result: InvestmentData[] = response.map((data: any) => createData(
+                data.id, data.yahooSymbol, data.volume, data.openPrice, data.marketPrice
+            ));
             setUserInvestments(result);
             const investmentsHistoryResponse = await getUserInvestmentsHistoryData();
             const history = investmentsHistoryResponse.map(
                 (data: any) => createInvestmentsHistoryData(data.yahooSymbol, data.volume, data.openPrice, data.closePrice)
             );
             setUserInvestmentsHistory(history);
+
+            const instrumentTypesResponse = await getInstrumentTypes();
+            setInstrumentTypes(instrumentTypesResponse);
         }
         fetch();
     }, []);
@@ -51,7 +59,23 @@ const Home = () => {
         setUserInvestments([...prevInvestments, newInvestment]);
     }
 
+    const updateInvestments = (data: InvestmentData[]) => {
+        setUserInvestments(data);
+    }
+
+    const appendAssets = (asset: Asset) => {
+        const prevAssets = assets;
+        if (prevAssets === null) {
+            return;
+        }
+        setAssets([...prevAssets, asset]);
+    }
+
     let user = setUser();
+    if (user === null) {
+        navigate('/login');
+        return;
+    }
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -87,6 +111,8 @@ const Home = () => {
             <MenuButtons
                 logoutHandler={handleLogout}
                 menuHandler={() => {console.log(user)}}
+                adminButton={()=>{setAddInstrument(true)}}
+                user={user}
                 />
             <div className="vertical-panes">
                 <PaneWithTab
@@ -94,9 +120,10 @@ const Home = () => {
                     paneText="Instruments"
                     className="instrument-pane">
                         <InstrumentTypeMenu />
-                        <SearchBar placeholder="Search eg. Nvidia" />
-                        <AssetColumns/>
-                        <Assets clickHandler={handleAssetInfoClick}/>
+                        <Assets
+                            clickHandler={handleAssetInfoClick}
+                            assets={assets}
+                            setAssets={setAssets}/>
                 </PaneWithTab>
                 <PaneWithTab
                     tabs={[{ tabText: 'News', active: true }]}
@@ -109,6 +136,7 @@ const Home = () => {
                 <ExampleTab 
                     userInvestments={userInvestments}
                     userInvestmentsHistory={userInvestmentsHistory}
+                    updateInvestments={updateInvestments}
                     changeActiveTab={handleTabChange}/>
                 <SummaryFooter
                     investments={userInvestments}
@@ -117,6 +145,11 @@ const Home = () => {
                     activeTab={activeTab}/>
             {showlArticlePopup && <ArticleDetails article={articleDetails} closePopUpHandler={closePopup}/>}
             <AssetDetails asset={assetDetails} closePopUpHandler={closeAssetDetailsPopup} open={showAssetPopup}/>
+            <AddInstrument
+                open={addInstrument}
+                handleClose={()=>{setAddInstrument(false)}}
+                instrumentTypes={instrumentTypes}
+                appendAssets={appendAssets}/>
         </div>
     )
 }

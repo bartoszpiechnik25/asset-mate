@@ -8,8 +8,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Close } from '@mui/icons-material';
 import "./InvestmentsSummary.css";
-import { InvestmentData } from './investments-util';
-import { useEffect, useState } from 'react';
+import { InvestmentData, closeInvestment } from './investments-util';
+import React from 'react';
+import { InvestmentHistoryData } from '../history/history-util';
 
 const grossProfitColor = (value: number) => {
     if (value > 0) {
@@ -29,7 +30,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.body}`]: {
       fontSize: 13,
       color: 'white',
-      borderColor: '#979797'
+    //   borderColor: '#979797'
     },
   }));
 
@@ -44,53 +45,72 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:last-child td, &:last-child th': {
         borderColor: "#979797"
     },
-  }));
+}));
 
-const InvestmentsTable = ({userInvestments}: {userInvestments: InvestmentData[]|null}) => {
+
+interface InvestmentsTableProps {
+    userInvestments: InvestmentData[];
+    updateInvestments: (data: InvestmentData[]) => void;
+}
+
+
+
+const InvestmentsTable: React.FC<InvestmentsTableProps> = ({userInvestments, updateInvestments}) => {
 
     if (userInvestments === null) {
         return (<div>Something went wrong</div>)
     }
 
     return (
-        <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 'fit-content', backgroundColor:  '#222831', color: 'green'}} aria-label="simple table" >
-            <TableHead>
-            <StyledTableRow>
-                <StyledTableCell>Asset Symbol</StyledTableCell>
-                <StyledTableCell align="right">Volume</StyledTableCell>
-                <StyledTableCell align="right">Open Price</StyledTableCell>
-                <StyledTableCell align="right">Market Price</StyledTableCell>
-                <StyledTableCell align="right">Gross Profit</StyledTableCell>
-                <StyledTableCell align="right">Gross Profit %</StyledTableCell>
-                <StyledTableCell align="right">Close</StyledTableCell>
-
-            </StyledTableRow>
-            </TableHead>
-            <TableBody>
-            {userInvestments.map((row, index) => (
-                <StyledTableRow
-                    key={row.symbol + index}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    style={{outline: 'none'}}
-                >
-                    <StyledTableCell component="th" scope="row" sx={{fontWeight: 600}}>
-                        {row.symbol}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">{row.volume}</StyledTableCell>
-                    <StyledTableCell align="right">{row.openPrice}</StyledTableCell>
-                    <StyledTableCell align="right">{row.marketPrice}</StyledTableCell>
-                    <StyledTableCell align="right" style={{color: grossProfitColor(row.grossProfit)}}>
-                        {row.grossProfit}
-                    </StyledTableCell>
-                    <StyledTableCell align="right" style={{color: grossProfitColor(row.grossProfit)}}>
-                        {row.grossProfitPercent}
-                    </StyledTableCell>
-                    <StyledTableCell align="right"><Close color='error' sx={{cursor: 'pointer'}}/></StyledTableCell>
-                </StyledTableRow>
-            ))}
-            </TableBody>
-        </Table>
+        <TableContainer>
+            <Table sx={{ minWidth: 'fit-content', backgroundColor:  '#222831'}} aria-label="sticky table" >
+                <TableHead>
+                    <StyledTableRow>
+                        <StyledTableCell>Asset Symbol</StyledTableCell>
+                        <StyledTableCell align="right">Volume</StyledTableCell>
+                        <StyledTableCell align="right">Open Price</StyledTableCell>
+                        <StyledTableCell align="right">Market Price</StyledTableCell>
+                        <StyledTableCell align="right">Gross Profit</StyledTableCell>
+                        <StyledTableCell align="right">Gross Profit %</StyledTableCell>
+                        <StyledTableCell align="right">Close</StyledTableCell>
+                    </StyledTableRow>
+                </TableHead>
+                <TableBody>
+                {userInvestments.map((row, index) => (
+                    <StyledTableRow
+                        key={row.symbol + index}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        style={{outline: 'none'}}
+                    >
+                        <StyledTableCell component="th" scope="row" sx={{fontWeight: 600}}>
+                            {row.symbol}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">{row.volume}</StyledTableCell>
+                        <StyledTableCell align="right">{row.openPrice}</StyledTableCell>
+                        <StyledTableCell align="right">{row.marketPrice}</StyledTableCell>
+                        <StyledTableCell align="right" style={{color: grossProfitColor(row.grossProfit)}}>
+                            {row.grossProfit}
+                        </StyledTableCell>
+                        <StyledTableCell align="right" style={{color: grossProfitColor(row.grossProfit)}}>
+                            {row.grossProfitPercent}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                            <div className='close-investment' onClick={() => {
+                                console.log(row.id);
+                                const fetch = async () => {
+                                    await closeInvestment(row.id);
+                                }
+                                fetch();
+                                const filteredUserInvestments = userInvestments.filter(item => item.id !== row.id);
+                                updateInvestments(filteredUserInvestments);
+                            }}>
+                                <Close color='error' sx={{cursor: 'pointer'}}/>
+                            </div>
+                        </StyledTableCell>
+                    </StyledTableRow>
+                ))}
+                </TableBody>
+            </Table>
         </TableContainer>
     );
 }

@@ -175,6 +175,7 @@ const InvestDialog = ({addRecordToUserInvestments}: {addRecordToUserInvestments:
                                 setShowAlert(true);
                             } else {
                                 const newInvestment: InvestmentData = createData(
+                                    result.id,
                                     result.yahooSymbol,
                                     result.volume,
                                     result.openPrice,

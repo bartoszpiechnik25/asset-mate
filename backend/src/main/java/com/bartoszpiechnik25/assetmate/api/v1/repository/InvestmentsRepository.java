@@ -10,6 +10,6 @@ import java.util.UUID;
 
 public interface InvestmentsRepository extends JpaRepository<Investment, UUID> {
     Optional<List<Investment>> getInvestmentByUserId(UUID user_id);
-    @Query("select i from Investment i where i.id not in (select h.investment.id from InvestmentHistory h)")
+    @Query("select i from Investment i where i.id not in (select h.investment.id from InvestmentHistory h) and i.user.username = ?1")
     Optional<List<Investment>> getInvestmentByUserUsername(String username);
 }
