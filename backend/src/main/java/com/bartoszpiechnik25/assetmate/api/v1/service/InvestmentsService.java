@@ -59,7 +59,6 @@ public class InvestmentsService {
     }
 
     public InvestmentHistory closeInvestment(UUID investment_id) {
-        System.out.println("siema");
         InvestmentHistory investmentHistory = new InvestmentHistory();
         var investment = investmentsRepository.findById(investment_id).orElse(null);
         if (investment == null) {

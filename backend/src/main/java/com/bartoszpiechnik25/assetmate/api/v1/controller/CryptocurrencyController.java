@@ -45,7 +45,6 @@ public class CryptocurrencyController {
             Cryptocurrency cryptocurrency = null;
             if (params.containsKey("geckoId")) {
                 cryptocurrency = service.getCryptocurrencyByGeckoId(params.get("geckoId"));
-                System.out.println(cryptocurrency);
             }
             if (params.containsKey("id")) {
                 cryptocurrency = service.getCryptocurrency(UUID.fromString(params.get("id")));

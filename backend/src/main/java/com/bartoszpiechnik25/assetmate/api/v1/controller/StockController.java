@@ -24,7 +24,6 @@ public class StockController {
     @GetMapping("/{yahoo_symbol}")
     public ResponseEntity<?> getStockDetails(@PathVariable String yahoo_symbol) {
         var stock = service.getStockByYahooSymbol(yahoo_symbol);
-        System.out.println(stock);
         if (stock == null) {
             var header = new HttpHeaders();
             header.add("Content-Type", "application/json");
