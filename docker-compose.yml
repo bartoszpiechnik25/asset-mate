@@ -1,39 +1,46 @@
-version: "3.9"
 services:
-  mongo-db:
-    container_name: financial-instruments-mongo
-    image: mongo:latest
-    restart: always
-    command:
-      - --auth
-    # ports:
-    #   - "27017:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-    volumes:
-      - ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-    env_file: .env
-
-  mongo-express:
-    container_name: mongo-express
-    image: mongo-express
-    restart: always
-    environment:
-      - ME_CONFIG_MONGODB_URL=${MONGO_URL}
-    ports:
-      - "8081:8081"
-    depends_on:
-      - mongo-db
-
-  grpc-etf-server:
-    container_name: grpc-etf-server
+  news_service:
+    container_name: news_service_python
     build:
-      context: .
-      dockerfile: ./etf_service/Dockerfile
+      context: ./news-service
     restart: always
     ports:
-      - "50051:50051"
+      - "8000:8000"
     depends_on:
-      - mongo-db
-    env_file: .env
+      - redis
+      - database
+
+  redis:
+    container_name: redis_cache_service
+    image: redis:7.2.4-alpine3.19
+
+  database:
+    container_name: asset_mate_db
+    image: postgres:16.3-alpine3.19
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USERNAME=${POSTGRES_USERNAME}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+  
+  api_server:
+    build:
+      context: ./backend
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+
+volumes:
+  dbdata:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/Users/bartoszpiechnik/volume/postgres'

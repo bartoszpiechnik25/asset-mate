@@ -33,7 +33,7 @@ interface InvestmentsHistoryTabsProps {
 const ExampleTab: React.FC<InvestmentsHistoryTabsProps> = ({userInvestments, userInvestmentsHistory, changeActiveTab, updateInvestments}) => {
     const [value, setValue] = useState(0);
 
-    const handleChange = (event: any, newValue: number) => {
+    const handleChange = (_event: any, newValue: number) => {
         setValue(newValue);
         changeActiveTab(newValue)
     };

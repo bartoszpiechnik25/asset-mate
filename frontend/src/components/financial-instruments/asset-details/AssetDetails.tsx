@@ -26,7 +26,7 @@ const AssetDetails: React.FC<AssetDetailsProps> = ({asset, closePopUpHandler, op
             return <StockDetails symbol={asset.symbol} open={open} closeDialogHandler={closePopUpHandler}/>
         }
         default: {
-            return <div>Error</div>
+            return <div></div>
         }
     }
 }

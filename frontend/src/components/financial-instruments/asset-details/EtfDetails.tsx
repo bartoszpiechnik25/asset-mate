@@ -32,6 +32,7 @@ const EtfDetails: React.FC<DetailsProps> = ({symbol, open, closeDialogHandler}) 
     if (etf === null || etfPerformance === null) {
         return <div></div>
     }
+    console.log(etfPerformance, etf)
     return (
         <Dialog
             open={open}

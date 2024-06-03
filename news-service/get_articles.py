@@ -8,8 +8,6 @@ def getNArticles(topic: str, max_articles: int=5) -> List[Dict|None]:
     results = gnews.get_news(topic)
     articles = []
     for article in results:
-        # full_article = gnews.get_full_article(article['url'])
-        # if full_article:
         articles.append(
             {
                 "description": article['description'],

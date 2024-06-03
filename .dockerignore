@@ -8,3 +8,6 @@ docker-compose.yml
 __pycache__/
 etf_service/client.py
 etf_service/Dockerfile
+.idea
+target/
+.gitignore

@@ -53,7 +53,7 @@ public class InvestmentsService {
         newInvestment.setVolume(BigDecimal.valueOf(investRequest.getVolume()));
         newInvestment.setUser(user);
         newInvestment.setOpenPrice(BigDecimal.valueOf(investRequest.getOpenPrice()));
-        newInvestment.setMarketPrice(new BigDecimal("90.12"));
+        newInvestment.setMarketPrice(BigDecimal.valueOf(investRequest.getMarketPrice()));
         newInvestment.setAcquiredAt(OffsetDateTime.now());
         return investmentsRepository.save(newInvestment);
     }

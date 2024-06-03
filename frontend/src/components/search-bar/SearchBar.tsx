@@ -6,10 +6,6 @@ import Button from '@mui/material/Button';
 import { useState } from "react";
 import { getArticles } from "../article/article-util";
 
-interface ISearchBarProps {
-    placeholder: string;
-}
-
 const comboBoxSx = () => {
     return {
         // width: 250,

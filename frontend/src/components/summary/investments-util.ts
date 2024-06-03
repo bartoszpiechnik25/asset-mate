@@ -30,7 +30,6 @@ const getUserInvestmentsData = async () => {
 
 const closeInvestment = async (id: string) => {
     const closeUrl = url + id + "/close";
-    console.log(closeUrl)
     const token = getToken();
     if (token === null) {
         return null;
@@ -47,7 +46,6 @@ const closeInvestment = async (id: string) => {
             }
         );
         if (response.status === 200) {
-            console.log(response.data)
             return response.data
         }
 

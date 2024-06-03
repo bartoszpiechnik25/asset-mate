@@ -9,7 +9,7 @@ interface PaneWithTabProps extends IPane {
     icons?: React.ReactNode;
 }
 
-const PaneWithTab: React.FC<PaneWithTabProps> = ({tabs, paneText, className, children, icons}) => {
+const PaneWithTab: React.FC<PaneWithTabProps> = ({tabs, paneText, className, children}) => {
     return (
         <div className="pane-tab">
             <div className="tab-container">

@@ -88,7 +88,6 @@ const Assets: React.FC<AssetsProps> = ({clickHandler, assets, setAssets}) => {
                                         symbol: asset.yahooSymbol,
                                         type: asset.instrumentTypeName
                                     }
-                                    console.log(assetDetails);
                                     clickHandler(assetDetails);
                                 }}>
                                     <Info sx={{cursor: 'pointer'}}/>

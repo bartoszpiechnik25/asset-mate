@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getToken, setUser } from "../../hooks/useUser";
 
-const validateInput = (symbol: string, currency: string, volume: number, openPrice: number, availableSymbols: string[], availableCurrencies: string[]) => {
+const validateInput = (symbol: string, currency: string, volume: number, openPrice: number, marketPrice: number, availableSymbols: string[], availableCurrencies: string[]) => {
     if (symbol === '' || !availableSymbols.includes(symbol)) {
         return false;
     }
@@ -10,7 +10,7 @@ const validateInput = (symbol: string, currency: string, volume: number, openPri
         return false;
     }
 
-    if (volume <= 0 || openPrice <= 0) {
+    if (volume <= 0 || openPrice <= 0 || marketPrice <= 0) {
         return false;
     }
     return true;
@@ -18,7 +18,7 @@ const validateInput = (symbol: string, currency: string, volume: number, openPri
 
 const url = "http://localhost:8080/api/v1/investments"
 
-const createInvestment = async (symbol: string, currency: string, volume: number, openPrice: number) => {
+const createInvestment = async (symbol: string, currency: string, volume: number, openPrice: number, marketPrice: number) => {
     const token = getToken();
     if (token === null) {
         return null;
@@ -36,6 +36,7 @@ const createInvestment = async (symbol: string, currency: string, volume: number
                 currency: currency,
                 volume: volume,
                 openPrice: openPrice,
+                marketPrice: marketPrice,
                 userId: user.id
             },
             {

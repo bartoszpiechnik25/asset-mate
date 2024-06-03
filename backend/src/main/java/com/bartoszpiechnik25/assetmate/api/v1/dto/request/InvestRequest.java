@@ -15,6 +15,7 @@ public class InvestRequest {
     private String symbol;
     private Double volume;
     private Double openPrice;
+    private Double marketPrice;
     private String currency;
     private UUID userId;
 }

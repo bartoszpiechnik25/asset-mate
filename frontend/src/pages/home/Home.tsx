@@ -1,5 +1,4 @@
 import PaneWithTab from "../../components/PaneWithTab";
-import SearchBar from "../../components/search-bar/SearchBar";
 import InstrumentTypeMenu, { getInstrumentTypes } from "../../components/financial-instruments/InstrumentTypeMenu";
 import "./Home.css";
 import SummaryFooter from "../../components/summary-footer/SummaryFooter";
@@ -90,6 +89,7 @@ const Home = () => {
 
     const handleAssetInfoClick = (asset: any) => {
         setAssetDetails(asset);
+        console.log(asset)
         setshowAssetPopup(true);
     }
 
@@ -102,6 +102,7 @@ const Home = () => {
     };
 
     const closeAssetDetailsPopup = () => {
+        setAssetDetails('');
         setshowAssetPopup(false);
     }
 

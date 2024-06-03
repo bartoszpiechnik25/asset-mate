@@ -55,6 +55,7 @@ const InvestDialog = ({addRecordToUserInvestments}: {addRecordToUserInvestments:
     const [currency, setCurrency] = useState<string>('');
     const [volume, setVolume] = useState<number>(0);
     const [openPrice, setOpenPrice] = useState(0);
+    const [marketPrice, setMarketPrice] = useState(0);
     const [availableSymbols, setAvailableSymbols] = useState([]);
     const [currencies, setCurrencies] = useState([]);
 
@@ -68,7 +69,7 @@ const InvestDialog = ({addRecordToUserInvestments}: {addRecordToUserInvestments:
         fetch();
     }, [])
 
-    const handleSymbolChange = (value: any) => {
+    const handleSymbolChange = (_event: any, value: any) => {
         setSymbol(value as string);
     }
     const handleCurrencyChange = (event: SelectChangeEvent) => {
@@ -117,7 +118,7 @@ const InvestDialog = ({addRecordToUserInvestments}: {addRecordToUserInvestments:
                     options={availableSymbols}
                     sx={comboBoxSx()}
                     renderInput={(params) => <TextField {...params} label="Symbol"/>}
-                    onChange={(event, value) => {handleSymbolChange(value)}}
+                    onChange={(event, value) => {handleSymbolChange(event, value)}}
                 />
                 <FormControl sx={comboBoxSx()}>
                     <InputLabel id="select-currency-autowidth-label">Currency</InputLabel>
@@ -156,6 +157,17 @@ const InvestDialog = ({addRecordToUserInvestments}: {addRecordToUserInvestments:
                     }}
                 />
             </div>
+            <br/>
+            <TextField
+                    type="number"
+                    id="market-price-input"
+                    label="Market price"
+                    variant="outlined"
+                    sx={comboBoxSx()}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        setMarketPrice(Number(event.target.value));
+                    }}
+                />
             
         </DialogContent>
         <DialogActions>
@@ -164,11 +176,13 @@ const InvestDialog = ({addRecordToUserInvestments}: {addRecordToUserInvestments:
             style={{color: "white"}}
             onClick={
                 () => {
-                    const valid = validateInput(symbol, currency, volume, openPrice, availableSymbols, currencies);
+                    const valid = validateInput(symbol, currency, volume, openPrice, marketPrice, availableSymbols, currencies);
                     if (valid != true) {
+                        setAlertMessage("Cannot creat investment, invalid data!");
+                        setShowAlert(true);
                         return
                     }
-                    createInvestment(symbol, currency, volume, openPrice)
+                    createInvestment(symbol, currency, volume, openPrice, marketPrice)
                         .then((result) => {
                             if (result === null) {
                                 setAlertMessage("Invalid data, could not create investment!");

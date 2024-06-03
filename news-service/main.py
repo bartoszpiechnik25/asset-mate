@@ -49,7 +49,7 @@ def validateUser(credentials: HTTPAuthorizationCredentials=Depends(bearer_scheme
 app = FastAPI()
 
 
-FastAPICache.init(RedisBackend('redis://localhost:6379'), prefix='fastapi-cache')
+FastAPICache.init(RedisBackend('redis://redis:6379'), prefix='fastapi-cache')
 origins = ["*"]
 
 app.add_middleware(

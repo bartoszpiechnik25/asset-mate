@@ -5,12 +5,10 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { Close } from '@mui/icons-material';
 import "./InvestmentsSummary.css";
 import { InvestmentData, closeInvestment } from './investments-util';
 import React from 'react';
-import { InvestmentHistoryData } from '../history/history-util';
 
 const grossProfitColor = (value: number) => {
     if (value > 0) {
@@ -22,7 +20,7 @@ const grossProfitColor = (value: number) => {
     }
 }
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(({ }) => ({
     [`&.${tableCellClasses.head}`]: {
       color: '#979797',
       fontSize: 16,
@@ -96,7 +94,6 @@ const InvestmentsTable: React.FC<InvestmentsTableProps> = ({userInvestments, upd
                         </StyledTableCell>
                         <StyledTableCell align="right">
                             <div className='close-investment' onClick={() => {
-                                console.log(row.id);
                                 const fetch = async () => {
                                     await closeInvestment(row.id);
                                 }
