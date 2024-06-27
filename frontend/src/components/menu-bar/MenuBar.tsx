@@ -18,10 +18,10 @@ const MenuButtons: React.FC<MenuButtonsProps> = ({logoutHandler, menuHandler, ad
                     onClick={adminButton}>
                 <Add/>
             </div>}
-            <div className="icon-wrapper"
+            {/* <div className="icon-wrapper"
                 onClick={menuHandler}>
                 <Menu/>
-            </div>
+            </div> */}
             <div className="icon-wrapper"
                 onClick={logoutHandler}>
                 <Logout/>

@@ -119,7 +119,7 @@ const Home = () => {
                     tabs= {[{ tabText: 'Instruments', active: true }]}
                     paneText="Instruments"
                     className="instrument-pane">
-                        <InstrumentTypeMenu />
+                        {/* <InstrumentTypeMenu /> */}
                         <Assets
                             clickHandler={handleAssetInfoClick}
                             assets={assets}
